@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dxtlwp8t6phnl"
-path="res://.godot/imported/Sprite-0004.png-f13f9fb824e744fc36949150d9c3481e.ctex"
+uid="uid://df6bu2qctkho2"
+path="res://.godot/imported/character_walking.png-8b518cf37f5ce0434db577e2350c1f26.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/environment/Sprite-0004.png"
-dest_files=["res://.godot/imported/Sprite-0004.png-f13f9fb824e744fc36949150d9c3481e.ctex"]
+source_file="res://assets/player/anims/character_walking.png"
+dest_files=["res://.godot/imported/character_walking.png-8b518cf37f5ce0434db577e2350c1f26.ctex"]
 
 [params]
 

@@ -1,0 +1,25 @@
+[remap]
+
+importer="Aseprite SpriteFrames Import"
+type="SpriteFrames"
+uid="uid://hnojmcfvxn3c"
+path="res://.godot/imported/character_walking.aseprite-279677b414804a70cf0a863e6f316ad7.res"
+
+[deps]
+
+source_file="res://assets/player/anims/character_walking.aseprite"
+dest_files=["res://.godot/imported/character_walking.aseprite-279677b414804a70cf0a863e6f316ad7.res"]
+
+[params]
+
+spritesheet/layout=0
+spritesheet/fixed_rows_count=1
+spritesheet/fixed_columns_count=1
+spritesheet/border_type=0
+spritesheet/trim=false
+spritesheet/ignore_empty=false
+spritesheet/merge_duplicates=false
+animation/default/name="default"
+animation/default/direction=0
+animation/default/repeat_count=0
+animation/autoplay=""

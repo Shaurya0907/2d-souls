@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://bbgin8kemxs7r"]
 
 [ext_resource type="Texture2D" uid="uid://bohu7conbadhi" path="res://assets/environment/TileMap.png" id="1_o5qli"]
-[ext_resource type="Texture2D" uid="uid://dxtlwp8t6phnl" path="res://assets/environment/Sprite-0004.png" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://babnaayj5u5r2" path="res://scenes/player.tscn" id="3_sugp2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sugp2"]
 texture = ExtResource("1_o5qli")
@@ -18,28 +18,8 @@ texture = ExtResource("1_o5qli")
 1:2/0 = 0
 2:2/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jyhfs"]
-texture = ExtResource("2_0wfyh")
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-3:1/0 = 0
-0:2/0 = 0
-1:2/0 = 0
-2:2/0 = 0
-3:2/0 = 0
-0:3/0 = 0
-1:3/0 = 0
-2:3/0 = 0
-3:3/0 = 0
-
 [sub_resource type="TileSet" id="TileSet_v15d6"]
 sources/0 = SubResource("TileSetAtlasSource_sugp2")
-sources/1 = SubResource("TileSetAtlasSource_jyhfs")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0wfyh"]
 texture = ExtResource("1_o5qli")
@@ -61,7 +41,7 @@ sources/0 = SubResource("TileSetAtlasSource_0wfyh")
 
 [node name="main" type="Node2D" unique_id=1265479436]
 
-[node name="TileSet" type="Node2D" parent="." unique_id=1481455101]
+[node name="TileSet" type="StaticBody2D" parent="." unique_id=1431537505]
 
 [node name="ground" type="TileMapLayer" parent="TileSet" unique_id=44958371]
 texture_filter = 1
@@ -73,3 +53,9 @@ tile_set = SubResource("TileSet_v15d6")
 texture_filter = 1
 tile_map_data = PackedByteArray("AAAAAAwAAAADAAAAAAABAAwAAAAEAAAAAAACAAwAAAAFAAAAAAADAAwAAAADAAAAAAAEAAwAAAAEAAAAAAAFAAwAAAAFAAAAAAAGAAwAAAADAAAAAAAHAAwAAAAEAAAAAAAIAAwAAAAFAAAAAAAJAAwAAAADAAAAAAAKAAwAAAAEAAAAAAALAAwAAAAFAAAAAAAMAAwAAAADAAAAAAANAAwAAAAEAAAAAAAOAAwAAAAFAAAAAAAPAAwAAAADAAAAAAAQAAwAAAAEAAAAAAARAAwAAAAFAAAAAAASAAwAAAADAAAAAAATAAwAAAAEAAAAAAAUAAwAAAAFAAAAAAAVAAwAAAADAAAAAAAWAAwAAAAEAAAAAAAXAAwAAAAFAAAAAAAYAAwAAAADAAAAAAAZAAwAAAAEAAAAAAAaAAwAAAAFAAAAAAAbAAwAAAADAAAAAAAcAAwAAAAEAAAAAAAdAAwAAAAFAAAAAAAeAAwAAAADAAAAAAAfAAwAAAAEAAAAAAAgAAwAAAAFAAAAAAAhAAwAAAADAAAAAAAiAAwAAAAEAAAAAAAjAAwAAAAFAAAAAAAkAAwAAAADAAAAAAAlAAwAAAAEAAAAAAAmAAwAAAAFAAAAAAAnAAwAAAADAAAAAAA=")
 tile_set = SubResource("TileSet_sgp6g")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TileSet" unique_id=618668050]
+polygon = PackedVector2Array(-2, 208, -1, 272, 639, 272, 639, 208)
+
+[node name="player" parent="TileSet" unique_id=1501936433 instance=ExtResource("3_sugp2")]
+position = Vector2(113, 198)

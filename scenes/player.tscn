@@ -2,11 +2,15 @@
 
 [ext_resource type="Script" uid="uid://dba4pu1yesca7" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://cyofih7kgemyu" path="res://assets/player/character_walking.aseprite" id="2_qhqgy"]
+[ext_resource type="AnimationLibrary" uid="uid://crdtbdgky7im7" path="res://scenes/player_animations.tres" id="3_dqkch"]
+[ext_resource type="SpriteFrames" uid="uid://hnojmcfvxn3c" path="res://assets/player/anims/character_walking.aseprite" id="4_qlg0r"]
+[ext_resource type="SpriteFrames" uid="uid://cr5jum5peu3xf" path="res://assets/player/anims/character_jump_inplace.aseprite" id="5_qlg0r"]
 
 [node name="player" type="CharacterBody2D" unique_id=1501936433]
 script = ExtResource("1_g2els")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1585258732]
+visible = false
 texture_filter = 1
 texture_repeat = 1
 position = Vector2(11, 10)
@@ -34,5 +38,68 @@ metadata/_aseprite_wizard_interface_config_ = {
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=845262731]
 scale = Vector2(1.36, 1.36)
-build_mode = 1
 polygon = PackedVector2Array(-15.4411745, 4.411764, -15.4411745, 6.617646, -13.970587, 6.617646, -13.970587, 7.3529406, -10.294117, 7.3529406, -10.294117, 6.617646, -9.558823, 6.617646, -9.558823, 5.8823524, -7.3529406, 5.8823524, -7.3529406, 5.1470585, -4.411764, 5.1470585, -4.411764, 5.8823524, -5.1470585, 5.8823524, -5.1470585, 6.617646, -4.411764, 6.617646, -4.411764, 7.3529406, -2.205882, 7.3529406, -2.205882, 6.617646, -0.73529404, 6.617646, -0.73529404, 7.3529406, 0.73529404, 7.3529406, 0.73529404, 5.8823524, 1.4705881, 5.8823524, 1.4705881, 7.3529406, 2.205882, 7.3529406, 2.205882, 5.8823524, 2.9411762, 5.8823524, 2.9411762, 5.1470585, 3.6764703, 5.1470585, 3.6764703, 2.205882, 2.9411762, 2.205882, 2.9411762, 0, 4.411764, 0, 4.411764, -0.73529404, 6.617646, -0.73529404, 6.617646, -2.205882, 5.8823524, -2.205882, 5.8823524, -2.9411762, 4.411764, -2.9411762, 4.411764, -2.205882, 2.9411762, -2.205882, 2.9411762, -2.9411762, 3.6764703, -2.9411762, 3.6764703, -6.617646, 8.088235, -6.617646, 8.088235, -7.3529406, 5.8823524, -7.3529406, 5.8823524, -8.088235, 3.6764703, -8.088235, 3.6764703, -8.823528, 2.205882, -8.823528, 2.205882, -9.558823, 0.73529404, -9.558823, 0.73529404, -8.823528, -0.73529404, -8.823528, -0.73529404, -8.088235, -2.9411762, -8.088235, -2.9411762, -7.3529406, -4.411764, -7.3529406, -4.411764, -6.617646, -0.73529404, -6.617646, -0.73529404, -3.6764703, -1.4705881, -3.6764703, -1.4705881, -2.9411762, -2.205882, -2.9411762, -2.205882, -1.4705881, -3.6764703, -1.4705881, -3.6764703, -0.73529404, -4.411764, -0.73529404, -4.411764, 0, -6.617646, 0, -6.617646, 0.73529404, -8.823528, 0.73529404, -8.823528, 1.4705881, -10.294117, 1.4705881, -10.294117, 2.205882, -12.499999, 2.205882, -12.499999, 2.9411762, -13.970587, 2.9411762, -13.970587, 3.6764703, -14.705881, 3.6764703, -14.705881, 4.411764)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1080169838]
+libraries/ = ExtResource("3_dqkch")
+
+[node name="walking" type="AnimatedSprite2D" parent="." unique_id=1056589928]
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(11, 10)
+sprite_frames = ExtResource("4_qlg0r")
+metadata/_dot_aseprite_importer_player = NodePath("../AnimationPlayer")
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": false,
+"pending_changes": {
+"source_uid": 519025559938849046
+}
+}
+metadata/_aseprite_wizard_config_ = {
+"embed_tex": true,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"scale": "1.0",
+"should_round_fps": true,
+"slice": "",
+"source": "res://assets/player/anims/character_walking.aseprite",
+"source_uid": -1
+}
+metadata/_dot_aseprite_importer_sync_key = "995b5004eb94c569fe72eff53c3be601"
+
+[node name="jumping" type="AnimatedSprite2D" parent="." unique_id=186572598]
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(11, 10)
+sprite_frames = ExtResource("5_qlg0r")
+metadata/_dot_aseprite_importer_player = NodePath("../AnimationPlayer")
+metadata/_aseprite_wizard_interface_config_ = {
+"layer_section": false,
+"pending_changes": {
+"source_uid": 519025559938849046
+}
+}
+metadata/_aseprite_wizard_config_ = {
+"embed_tex": true,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"scale": "1.0",
+"should_round_fps": true,
+"slice": "",
+"source": "res://assets/player/anims/character_walking.aseprite",
+"source_uid": -1
+}
+metadata/_dot_aseprite_importer_sync_key = "1fa6aa480a90df89bc17358b3ae3ba10"
+
+[node name="Timer" type="Timer" parent="." unique_id=265082139]
+process_callback = 0
+wait_time = 0.3
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
