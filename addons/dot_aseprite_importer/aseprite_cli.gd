@@ -1,0 +1,320 @@
+@tool
+extends RefCounted
+## Wrapper around the Aseprite executable.
+##
+## Has no editor dependency, so headless tests can use it. Every path passed in must be absolute
+## (the caller globalizes res:// paths). Starting Aseprite costs about 200 ms, plus the time it
+## takes to open the file, while exporting a strip costs a few, so an import exports every strip in
+## a single process of aseprite_batch.lua. What a file holds is read from its bytes by
+## AsepriteFileReader instead; [method list_contents] lists the same through Aseprite and is kept
+## as the tests' reference. The script rejects unknown layer or tag names, directions that do not
+## belong to the grid, and cells that do not fit the sprite. Failures are described in
+## [member last_error].
+
+const Settings := preload("settings.gd")
+
+const BATCH_SCRIPT := "aseprite_batch.lua"
+const JOBS_FILE := "jobs.txt"
+const SIZE_PREFIX := "size\t"
+const LAYER_PREFIX := "layer\t"
+const TAG_PREFIX := "tag\t"
+const FRAME_PREFIX := "frame\t"
+const STRIP_PREFIX := "strip\t"
+const WRITTEN_PREFIX := "written\t"
+const DONE_PREFIX := "done\t"
+const MAX_LOGGED_OUTPUT := 500
+
+## Why the last failed call failed.
+var last_error := ""
+## Relative paths of the strips written by the last [method export_strips] call. A cell with no
+## pixels in any frame of its tag writes nothing, so it is not listed.
+var last_written := PackedStringArray()
+
+var _executable: String = ""
+var _batch_script: String = ""
+
+
+func _init(executable_path: String) -> void:
+	_executable = executable_path
+	var script := get_script() as Script
+	_batch_script = ProjectSettings.globalize_path(
+		script.resource_path.get_base_dir().path_join(BATCH_SCRIPT)
+	)
+
+
+func get_executable() -> String:
+	return _executable
+
+
+## [param executable] as a file that exists, or "" when it cannot be found. A bare name such as
+## "aseprite" is looked up in the PATH, as the OS would, so a missing executable is found out
+## without starting a process: a failed start prints an engine error on Windows.
+static func find_executable(executable: String) -> String:
+	var path := executable.strip_edges()
+	if path == "":
+		return ""
+	if path.is_absolute_path() or path.contains("/") or path.contains("\\"):
+		return path if FileAccess.file_exists(path) else ""
+	var windows := OS.get_name() == "Windows"
+	var suffixes := PackedStringArray([""])
+	# Only what CreateProcess starts by itself: a .bat or .cmd wrapper would be found and then fail
+	# to run.
+	if windows and path.get_extension() == "":
+		suffixes = PackedStringArray([".exe", ".com"])
+	for folder: String in OS.get_environment("PATH").split(";" if windows else ":", false):
+		for suffix: String in suffixes:
+			var candidate := folder.strip_edges().path_join(path + suffix)
+			if FileAccess.file_exists(candidate):
+				return candidate
+	return ""
+
+
+## Why [param executable] cannot be used, with where to set it.
+static func not_found_message(executable: String) -> String:
+	return "Aseprite not found at '%s'. %s" % [executable, _where_to_set()]
+
+
+static func _where_to_set() -> String:
+	return (
+		"Set Editor Settings > %s or the %s variable to the Aseprite executable."
+		% [Settings.EXECUTABLE_KEY, Settings.EXECUTABLE_ENV]
+	)
+
+
+## What the file holds, listed by Aseprite itself, in file order:
+## {"size": Vector2i, "layers": PackedStringArray (top-level layers and groups),
+## "visible_layers": PackedStringArray, "tags": PackedStringArray,
+## "tag_ranges": {name: {"from": int, "to": int, "direction": String}} (0-based frames, first tag
+## of a repeated name), "frame_durations": PackedInt32Array (milliseconds)}.
+## Empty when Aseprite failed. Imports read the same from the file with AsepriteFileReader; this is
+## the reference the tests compare it with.
+func list_contents(aseprite_file: String) -> Dictionary:
+	var lines := _run_batch(PackedStringArray(["mode=list", "file=" + aseprite_file]))
+	if lines.is_empty():
+		return {}
+	var contents := {
+		"size": Vector2i.ZERO,
+		"layers": PackedStringArray(),
+		"visible_layers": PackedStringArray(),
+		"tags": PackedStringArray(),
+		"tag_ranges": {},
+		"frame_durations": PackedInt32Array(),
+	}
+	for line: String in lines:
+		var fields := line.split("\t")
+		if line.begins_with(SIZE_PREFIX) and fields.size() == 3:
+			contents["size"] = Vector2i(fields[1].to_int(), fields[2].to_int())
+		elif line.begins_with(LAYER_PREFIX) and fields.size() == 3:
+			add_layer(contents, fields[1], fields[2] == "true")
+		elif line.begins_with(TAG_PREFIX) and fields.size() == 5:
+			add_tag(contents, fields[1], fields[2].to_int(), fields[3].to_int(), fields[4])
+		elif line.begins_with(FRAME_PREFIX) and fields.size() == 3:
+			var durations: PackedInt32Array = contents["frame_durations"]
+			durations.append(fields[2].to_int())
+			contents["frame_durations"] = durations
+	return contents
+
+
+## Exports every job built by ExportPlanner.build_jobs() in one Aseprite process. [param layers] are
+## composed, and the job's direction cell ([param cell_size]) is cropped from every frame of its tag
+## into [param output_dir]/relative_path as a horizontal strip. [param cells_per_axis] is 3 for the
+## 3x3 grid of directions and 1 for a frame without directions; the script checks it against each
+## job's direction. The strips written end up in [member last_written]; the job list is written to
+## [param output_dir] as well.
+func export_strips(
+	aseprite_file: String,
+	jobs: Array[Dictionary],
+	layers: PackedStringArray,
+	cell_size: Vector2i,
+	cells_per_axis: int,
+	output_dir: String
+) -> Error:
+	last_error = ""
+	last_written = PackedStringArray()
+	if jobs.is_empty():
+		return OK
+	var lines := _job_lines(jobs, layers, cells_per_axis, output_dir)
+	if lines.is_empty():
+		return ERR_INVALID_PARAMETER
+	var jobs_path := output_dir.path_join(JOBS_FILE)
+	if _write_text(jobs_path, "\n".join(lines) + "\n") != OK:
+		return ERR_FILE_CANT_WRITE
+
+	var params := PackedStringArray(
+		[
+			"mode=export",
+			"file=" + aseprite_file,
+			"jobs=" + jobs_path,
+			"cell_width=%d" % cell_size.x,
+			"cell_height=%d" % cell_size.y,
+			"cells_per_axis=%d" % cells_per_axis,
+		]
+	)
+	var output := _run_batch(params)
+	if output.is_empty():
+		return FAILED
+	var written := PackedStringArray()
+	for job: Dictionary in jobs:
+		var relative_path: String = job["relative_path"]
+		var output_png := output_dir.path_join(relative_path)
+		if not output.has(WRITTEN_PREFIX + output_png):
+			continue
+		if _file_size(output_png) <= 0:
+			last_error = "Aseprite did not write '%s'." % output_png
+			return FAILED
+		written.append(relative_path)
+	last_written = written
+	return OK
+
+
+## Appends [param layer] to the "layers" of a listing, and to its "visible_layers" when
+## [param visible].
+static func add_layer(contents: Dictionary, layer: String, visible: bool) -> void:
+	var layers: PackedStringArray = contents["layers"]
+	layers.append(layer)
+	contents["layers"] = layers
+	if visible:
+		var visible_layers: PackedStringArray = contents["visible_layers"]
+		visible_layers.append(layer)
+		contents["visible_layers"] = visible_layers
+
+
+## Appends [param tag] to the "tags" of a listing. A name already listed keeps its first range,
+## the one aseprite_batch.lua exports for that name.
+static func add_tag(
+	contents: Dictionary, tag: String, from: int, to: int, direction: String
+) -> void:
+	var tags: PackedStringArray = contents["tags"]
+	tags.append(tag)
+	contents["tags"] = tags
+	var ranges: Dictionary = contents["tag_ranges"]
+	if not ranges.has(tag):
+		ranges[tag] = {"from": from, "to": to, "direction": direction}
+
+
+## Lines of the jobs file: the composed layers, then one strip per job. Empty, with
+## [member last_error] set, when something cannot be passed to the script.
+func _job_lines(
+	jobs: Array[Dictionary], layers: PackedStringArray, cells_per_axis: int, output_dir: String
+) -> PackedStringArray:
+	if cells_per_axis != 1 and cells_per_axis != 3:
+		last_error = "Invalid grid of %d cells per axis; use 1 or 3." % cells_per_axis
+		return PackedStringArray()
+	if layers.is_empty():
+		last_error = "Refusing to export without layers."
+		return PackedStringArray()
+	var lines := PackedStringArray()
+	for layer: String in layers:
+		if not _is_single_field(layer):
+			last_error = "Cannot export layer '%s': its name has a tab or a line break." % layer
+			return PackedStringArray()
+		lines.append(LAYER_PREFIX + layer)
+	for job: Dictionary in jobs:
+		var line := _prepare_job(job, output_dir)
+		if line == "":
+			return PackedStringArray()
+		lines.append(line)
+	return lines
+
+
+## Returns the job's line for the jobs file (strip<TAB>output<TAB>tag<TAB>direction) and clears its
+## output, or "" with [member last_error] set when the job cannot be exported.
+func _prepare_job(job: Dictionary, output_dir: String) -> String:
+	var tag: String = job["tag"]
+	var direction: String = job["direction"]
+	var relative_path: String = job["relative_path"]
+	var output_png := output_dir.path_join(relative_path)
+	var fields := PackedStringArray([output_png, tag, direction])
+	for field: String in fields:
+		if not _is_single_field(field):
+			last_error = "Cannot export '%s': a name has a tab or a line break." % output_png
+			return ""
+	# A leftover file from a previous run would hide a failed export.
+	if FileAccess.file_exists(output_png):
+		DirAccess.remove_absolute(output_png)
+	DirAccess.make_dir_recursive_absolute(output_png.get_base_dir())
+	return STRIP_PREFIX + "\t".join(fields)
+
+
+func _write_text(path: String, text: String) -> Error:
+	DirAccess.make_dir_recursive_absolute(path.get_base_dir())
+	var file := FileAccess.open(path, FileAccess.WRITE)
+	if file == null:
+		var open_error := FileAccess.get_open_error()
+		last_error = "Cannot write '%s' (%s)." % [path, error_string(open_error)]
+		return open_error
+	file.store_string(text)
+	file.close()
+	return OK
+
+
+## Runs aseprite_batch.lua and returns its output lines, or nothing (with [member last_error] set)
+## when it did not finish with its "done" line.
+func _run_batch(params: PackedStringArray) -> PackedStringArray:
+	var args := PackedStringArray(["-b"])
+	for param: String in params:
+		args.append("--script-param")
+		args.append(param)
+	# Every --script-param must come before --script.
+	args.append("--script")
+	args.append(_batch_script)
+	# Aseprite exits silently for a script that is not there, which would read as a wrong
+	# executable: e.g. the addon folder moved while the editor was open.
+	if not FileAccess.file_exists(_batch_script):
+		last_error = (
+			"The addon's script '%s' is missing; restart the editor or reinstall the addon."
+			% _batch_script
+		)
+		return PackedStringArray()
+	var output: Array = []
+	# stderr is read as well, so a Lua error ends up in last_error.
+	var code := OS.execute(_executable, args, output, true)
+	var text := "" if output.is_empty() else str(output[0])
+	var lines := text.replace("\r\n", "\n").split("\n", false)
+	for line: String in lines:
+		if code == 0 and line.begins_with(DONE_PREFIX):
+			return lines
+	if did_not_run(code, text, OS.get_name() == "Windows"):
+		var said := text.strip_edges().right(MAX_LOGGED_OUTPUT)
+		# Nothing at all can also be an Aseprite that crashed before the script printed anything,
+		# so the message does not claim the path is wrong.
+		var why := (
+			"'%s'" % said
+			if said != ""
+			else "no output: it may not be Aseprite, or it stopped before running the script"
+		)
+		last_error = (
+			"Aseprite at '%s' did not run the script (exit %d, %s). %s"
+			% [_executable, code, why, _where_to_set()]
+		)
+		return PackedStringArray()
+	last_error = (
+		"Aseprite failed (exit %d): %s" % [code, text.strip_edges().right(MAX_LOGGED_OUTPUT)]
+	)
+	return PackedStringArray()
+
+
+## True when a batch run that did not finish never got to run the script, rather than failing
+## inside it. The exit code cannot tell: Aseprite exits with 127 on a Lua error, which OS.execute()
+## reports as -1 on Windows, like a process it could not start. The output can. A script error
+## always prints its message, while nothing at all means the process did not start, is not
+## Aseprite, or stopped before the script said anything. Elsewhere OS.execute() runs the command
+## through sh, which reports a missing or non-executable file itself ("sh: ...", exit 127 or 126).
+static func did_not_run(code: int, output: String, windows: bool) -> bool:
+	var text := output.strip_edges()
+	if text == "":
+		return true
+	return not windows and (code == 126 or code == 127) and text.begins_with("sh:")
+
+
+static func _is_single_field(text: String) -> bool:
+	return not (text.contains("\t") or text.contains("\n") or text.contains("\r"))
+
+
+static func _file_size(path: String) -> int:
+	if not FileAccess.file_exists(path):
+		return -1
+	var file := FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		return -1
+	return file.get_length()
