@@ -1,58 +1,64 @@
 [gd_resource type="AnimationLibrary" format=3 uid="uid://crdtbdgky7im7"]
 
+[sub_resource type="Animation" id="Animation_43423"]
+length = 0.6000000089406967
+loop_mode = 1
+
 [sub_resource type="Animation" id="Animation_yax1o"]
 resource_name = "idle"
 
-[sub_resource type="Animation" id="Animation_43423"]
-length = 0.6000000089406967
+[sub_resource type="Animation" id="Animation_4vj3f"]
+length = 1.2
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("jumping:animation")
+tracks/0/path = NodePath("player_animated:animation")
 tracks/0/interp = 0
 tracks/0/loop_wrap = false
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"default"]
+"values": [&"jumping"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("jumping:frame")
+tracks/1/path = NodePath("player_animated:frame")
 tracks/1/interp = 0
 tracks/1/loop_wrap = false
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5]
 }
 
 [sub_resource type="Animation" id="Animation_cc6qw"]
-length = 0.4
+resource_name = "walking"
+length = 0.8
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("walking:animation")
+tracks/0/path = NodePath("player_animated:animation")
 tracks/0/interp = 0
 tracks/0/loop_wrap = false
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [&"default"]
+"values": [&"walking"]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("walking:frame")
+tracks/1/path = NodePath("player_animated:frame")
 tracks/1/interp = 0
 tracks/1/loop_wrap = false
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
@@ -60,7 +66,8 @@ tracks/1/keys = {
 
 [resource]
 _data = {
+&"default": SubResource("Animation_43423"),
 &"idle": SubResource("Animation_yax1o"),
-&"jumping_inplace": SubResource("Animation_43423"),
+&"jumping": SubResource("Animation_4vj3f"),
 &"walking": SubResource("Animation_cc6qw")
 }
