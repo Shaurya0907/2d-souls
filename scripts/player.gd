@@ -26,6 +26,8 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		anim_player.play("jumping")
 		timer.start()
+	if Input.is_action_just_pressed("attack"):
+		anim_player.play("attacking")
 	
 	
 	#Gravity here

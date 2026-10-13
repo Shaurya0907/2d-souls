@@ -1,20 +1,69 @@
 [gd_scene format=3 uid="uid://babnaayj5u5r2"]
 
 [ext_resource type="Script" uid="uid://dba4pu1yesca7" path="res://scripts/player.gd" id="1_g2els"]
+[ext_resource type="Texture2D" uid="uid://d37xnhd8gfut0" path="res://assets/player/anims/attacking/1.png" id="2_4ni07"]
 [ext_resource type="AnimationLibrary" uid="uid://crdtbdgky7im7" path="res://scenes/player_animations.tres" id="3_dqkch"]
 [ext_resource type="Texture2D" uid="uid://dsfttvfay0oap" path="res://assets/player/anims/jumping/1.png" id="3_jej6c"]
+[ext_resource type="Texture2D" uid="uid://dti1s2l0x84f5" path="res://assets/player/anims/attacking/2.png" id="3_l71n6"]
 [ext_resource type="Texture2D" uid="uid://cwnhskujho1ti" path="res://assets/player/anims/jumping/2.png" id="4_f1ej7"]
+[ext_resource type="Texture2D" uid="uid://btyfd8pflam5x" path="res://assets/player/anims/attacking/3.png" id="4_ke2ow"]
 [ext_resource type="Texture2D" uid="uid://tae1uk36eg2g" path="res://assets/player/anims/jumping/3.png" id="5_oprun"]
+[ext_resource type="Texture2D" uid="uid://ipcliahiykb8" path="res://assets/player/anims/attacking/4.png" id="5_ujl30"]
+[ext_resource type="Texture2D" uid="uid://cuh610yhvar5l" path="res://assets/player/anims/attacking/5.png" id="6_31cv2"]
 [ext_resource type="Texture2D" uid="uid://dj1p8hjaxt7ek" path="res://assets/player/anims/jumping/4.png" id="6_a8ls1"]
+[ext_resource type="Texture2D" uid="uid://cunb646cga6yv" path="res://assets/player/anims/attacking/6.png" id="7_pf23h"]
 [ext_resource type="Texture2D" uid="uid://d1vlkqkgels0n" path="res://assets/player/anims/jumping/5.png" id="7_qfm1y"]
+[ext_resource type="Texture2D" uid="uid://enya1vys0n3s" path="res://assets/player/anims/attacking/7.png" id="8_dt7fs"]
 [ext_resource type="Texture2D" uid="uid://df8al1aw04r81" path="res://assets/player/anims/jumping/6.png" id="8_fulsm"]
 [ext_resource type="Texture2D" uid="uid://didui4rje2d07" path="res://assets/player/anims/walking/1.png" id="9_4r5pv"]
+[ext_resource type="Texture2D" uid="uid://b4ngb3tfaebcb" path="res://assets/player/anims/attacking/8.png" id="9_wqfne"]
 [ext_resource type="Texture2D" uid="uid://c06ylv223xhby" path="res://assets/player/anims/walking/2.png" id="10_60mlk"]
+[ext_resource type="Texture2D" uid="uid://dd5vf777ehckv" path="res://assets/player/anims/attacking/9.png" id="10_wnwbv"]
+[ext_resource type="Texture2D" uid="uid://byprbj4m3tu1x" path="res://assets/player/anims/attacking/10.png" id="11_gl8cc"]
 [ext_resource type="Texture2D" uid="uid://xgaj30k4pc83" path="res://assets/player/anims/walking/3.png" id="11_i4ail"]
+[ext_resource type="Texture2D" uid="uid://c5nslnhli53dc" path="res://assets/player/anims/attacking/11.png" id="12_487ah"]
 [ext_resource type="Texture2D" uid="uid://8o342tiihrpw" path="res://assets/player/anims/walking/4.png" id="12_a38lo"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_v15d6"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_4ni07")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_l71n6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ke2ow")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ujl30")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_31cv2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_pf23h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_dt7fs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_wqfne")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_wnwbv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_gl8cc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_487ah")
+}],
+"loop": 1,
+"name": &"attacking",
+"speed": 7.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("3_jej6c")
@@ -71,12 +120,12 @@ one_shot = true
 [node name="player_animated" type="AnimatedSprite2D" parent="." unique_id=144585715]
 texture_filter = 1
 texture_repeat = 1
-position = Vector2(-21, -13)
+position = Vector2(-21, -19)
 sprite_frames = SubResource("SpriteFrames_v15d6")
-animation = &"jumping"
+animation = &"attacking"
 centered = false
 metadata/_dot_aseprite_importer_player = NodePath("../AnimationPlayer")
-metadata/_dot_aseprite_importer_sync_key = "3aa33672e199f77ff3ff552cfa7ae346"
+metadata/_dot_aseprite_importer_sync_key = "48353ac663cc1b1454c1106280fe129d"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1953212157]
 libraries/ = ExtResource("3_dqkch")
