@@ -88,16 +88,16 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 0.7,
 "texture": ExtResource("9_4r5pv")
 }, {
-"duration": 1.0,
+"duration": 0.7,
 "texture": ExtResource("10_60mlk")
 }, {
-"duration": 1.0,
+"duration": 0.7,
 "texture": ExtResource("11_i4ail")
 }, {
-"duration": 1.0,
+"duration": 0.7,
 "texture": ExtResource("12_a38lo")
 }],
 "loop": 1,
@@ -125,7 +125,7 @@ sprite_frames = SubResource("SpriteFrames_v15d6")
 animation = &"attacking"
 centered = false
 metadata/_dot_aseprite_importer_player = NodePath("../AnimationPlayer")
-metadata/_dot_aseprite_importer_sync_key = "48353ac663cc1b1454c1106280fe129d"
+metadata/_dot_aseprite_importer_sync_key = "124fb01d75e5d4571ba49fddf2ba62ce"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1953212157]
 libraries/ = ExtResource("3_dqkch")

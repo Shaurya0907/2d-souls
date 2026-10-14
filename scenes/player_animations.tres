@@ -17,7 +17,6 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_i6ugd"]
 length = 1.571428571428571
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -56,11 +55,23 @@ tracks/2/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_43423"]
-length = 0.6000000089406967
+length = 0.6
 loop_mode = 1
 
 [sub_resource type="Animation" id="Animation_yax1o"]
 resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("player_animated:frame")
+tracks/0/interp = 0
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_4vj3f"]
 length = 1.2
@@ -92,7 +103,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_cc6qw"]
 resource_name = "walking"
-length = 0.8
+length = 0.5599999904632569
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -113,7 +124,7 @@ tracks/1/path = NodePath("player_animated:frame")
 tracks/1/interp = 0
 tracks/1/loop_wrap = false
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"times": PackedFloat32Array(0, 0.14, 0.28, 0.42),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
