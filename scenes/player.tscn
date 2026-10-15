@@ -24,7 +24,10 @@
 [ext_resource type="Texture2D" uid="uid://c7to6kgwahaix" path="res://assets/player/fixed anims/jumping/4.png" id="23_2gdjj"]
 [ext_resource type="Texture2D" uid="uid://df2y4pgwxsvu5" path="res://assets/player/fixed anims/jumping/5.png" id="24_sc3ue"]
 [ext_resource type="Texture2D" uid="uid://uscvjefmo6co" path="res://assets/player/fixed anims/jumping/6.png" id="25_lxlsd"]
+[ext_resource type="Texture2D" uid="uid://cvwac3vdrlfed" path="res://assets/player/fixed anims/parry/1.png" id="25_wnwbv"]
+[ext_resource type="Texture2D" uid="uid://c07hk87fitqwq" path="res://assets/player/fixed anims/parry/2.png" id="26_gl8cc"]
 [ext_resource type="Texture2D" uid="uid://rk7emrwf54tf" path="res://assets/player/fixed anims/walking/1.png" id="26_ha2mi"]
+[ext_resource type="Texture2D" uid="uid://570l42jjmexs" path="res://assets/player/fixed anims/parry/3.png" id="27_487ah"]
 [ext_resource type="Texture2D" uid="uid://2cbh26lljh3v" path="res://assets/player/fixed anims/walking/2.png" id="27_apa73"]
 [ext_resource type="Texture2D" uid="uid://ccnauy7evjx7b" path="res://assets/player/fixed anims/walking/3.png" id="28_74r1k"]
 [ext_resource type="Texture2D" uid="uid://brc8s5t4euuqk" path="res://assets/player/fixed anims/walking/4.png" id="29_8svfe"]
@@ -121,6 +124,20 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
+"duration": 0.2,
+"texture": ExtResource("25_wnwbv")
+}, {
+"duration": 0.2,
+"texture": ExtResource("26_gl8cc")
+}, {
+"duration": 0.5,
+"texture": ExtResource("27_487ah")
+}],
+"loop": 0,
+"name": &"parry",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 0.7,
 "texture": ExtResource("26_ha2mi")
 }, {
@@ -155,10 +172,11 @@ texture_filter = 1
 texture_repeat = 1
 position = Vector2(-64, -64)
 sprite_frames = SubResource("SpriteFrames_v15d6")
-animation = &"dash"
+animation = &"parry"
+frame = 2
 centered = false
 metadata/_dot_aseprite_importer_player = NodePath("AnimationPlayer")
-metadata/_dot_aseprite_importer_sync_key = "2c27e54334d3744974117911abc799f1"
+metadata/_dot_aseprite_importer_sync_key = "a7e92eb2ffe3ed1cc2e612d4f9f6e6fe"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="player_animated" unique_id=1953212157]
 root_node = NodePath("../..")
