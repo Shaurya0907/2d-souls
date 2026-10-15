@@ -63,6 +63,9 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.y = 0  #gravity during dashing
 	move_and_slide()
+	
+	if Input.is_action_just_pressed("parry"):
+		anim_player.play("parry")
 		
 func dash():
 	isdashing = true
