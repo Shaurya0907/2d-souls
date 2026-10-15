@@ -5,7 +5,7 @@ extends CharacterBody2D
 
 var isjump = false
 var isattacking = false
-
+var isdashing = false
 const SPEED = 1
 
 func _physics_process(_delta: float) -> void:
@@ -13,14 +13,14 @@ func _physics_process(_delta: float) -> void:
 	# This is my movement code
 	if Input.is_action_pressed("move_forward"):
 		position.x += SPEED 
-		if anim_player.current_animation != "attacking" and anim_player.current_animation != "jumping":
+		if anim_player.current_animation != "attacking" and anim_player.current_animation != "jumping" and anim_player.current_animation != "dash":
 			anim_player.play("walking")
 	elif Input.is_action_pressed("move_backward"):
 		position.x -= SPEED
-		if anim_player.current_animation != "attacking" and anim_player.current_animation != "jumping":
+		if anim_player.current_animation != "attacking" and anim_player.current_animation != "jumping" and anim_player.current_animation != "dash":
 			anim_player.play("walking")
 	elif Input.is_action_just_released("move_forward") or Input.is_action_just_released("move_backward") and not isjump:
-		if not isattacking:
+		if not isattacking and not isdashing:
 			anim_player.play("idle")
 
 	if not is_on_floor():
@@ -39,7 +39,15 @@ func _physics_process(_delta: float) -> void:
 		
 		if not Input.is_action_pressed("move_forward") or not Input.is_action_pressed("move_backward"):
 			anim_player.play("idle")
-
+	if Input.is_action_just_pressed("dash") and not isdashing:
+		isdashing = true
+		anim_player.play("dash")
+		await anim_player.animation_finished
+		isdashing = false
+		
+		if not Input.is_action_just_pressed("jump") or not Input.is_action_pressed("move_forward") or not Input.is_action_pressed("move_backward"):
+			anim_player.play("idle")
+	
 	#Gravity here
 	velocity.y += 20
 	move_and_slide()
