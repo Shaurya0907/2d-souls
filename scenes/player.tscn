@@ -13,13 +13,11 @@
 [ext_resource type="Texture2D" uid="uid://b5jd6f26fnwbe" path="res://assets/player/fixed anims/attacking/9.png" id="10_t4otl"]
 [ext_resource type="Texture2D" uid="uid://c1muqwuh722px" path="res://assets/player/fixed anims/attacking/10.png" id="11_j2b1d"]
 [ext_resource type="Texture2D" uid="uid://camlq8rstpqth" path="res://assets/player/fixed anims/attacking/11.png" id="12_cs1tg"]
-[ext_resource type="Texture2D" uid="uid://bbibcf5k2w3ne" path="res://assets/player/fixed anims/dash/1.png" id="13_2dvfe"]
 [ext_resource type="Texture2D" uid="uid://do5bp7o8coul1" path="res://assets/player/fixed anims/dash/2.png" id="14_giy8y"]
 [ext_resource type="Texture2D" uid="uid://chhgowcxcigfr" path="res://assets/player/fixed anims/dash/3.png" id="15_fdfoy"]
 [ext_resource type="Texture2D" uid="uid://qwa7w27lv5fv" path="res://assets/player/fixed anims/dash/4.png" id="16_hhpqf"]
 [ext_resource type="Texture2D" uid="uid://eeb1cmqgy0b3" path="res://assets/player/fixed anims/dash/5.png" id="17_g5jhy"]
 [ext_resource type="Texture2D" uid="uid://bv2fye0eay2hh" path="res://assets/player/fixed anims/dash/6.png" id="18_holxr"]
-[ext_resource type="Texture2D" uid="uid://dqwbacdd3fb22" path="res://assets/player/fixed anims/dash/7.png" id="19_mx1m4"]
 [ext_resource type="Texture2D" uid="uid://r8blrq8kdvxn" path="res://assets/player/fixed anims/jumping/1.png" id="20_4gjji"]
 [ext_resource type="Texture2D" uid="uid://cuxopmskmrvrn" path="res://assets/player/fixed anims/jumping/2.png" id="21_u2ulf"]
 [ext_resource type="Texture2D" uid="uid://bvuv5etstuast" path="res://assets/player/fixed anims/jumping/3.png" id="22_6e8lb"]
@@ -34,66 +32,60 @@
 [sub_resource type="SpriteFrames" id="SpriteFrames_v15d6"]
 animations = [{
 "frames": [{
-"duration": 1.0,
+"duration": 0.3,
 "texture": ExtResource("2_wqfne")
 }, {
-"duration": 1.0,
+"duration": 0.4,
 "texture": ExtResource("3_wnwbv")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("4_gl8cc")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("5_487ah")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("6_md1ol")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("7_bj30b")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("8_jc3p3")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("9_hax0n")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("10_t4otl")
 }, {
-"duration": 1.0,
+"duration": 0.4,
 "texture": ExtResource("11_j2b1d")
 }, {
-"duration": 1.0,
+"duration": 0.3,
 "texture": ExtResource("12_cs1tg")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"attacking",
 "speed": 7.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": ExtResource("13_2dvfe")
-}, {
-"duration": 1.0,
+"duration": 0.1,
 "texture": ExtResource("14_giy8y")
 }, {
-"duration": 1.0,
+"duration": 0.7,
 "texture": ExtResource("15_fdfoy")
 }, {
-"duration": 1.0,
+"duration": 0.7,
 "texture": ExtResource("16_hhpqf")
 }, {
-"duration": 1.0,
+"duration": 0.7,
 "texture": ExtResource("17_g5jhy")
 }, {
-"duration": 1.0,
+"duration": 0.1,
 "texture": ExtResource("18_holxr")
-}, {
-"duration": 1.0,
-"texture": ExtResource("19_mx1m4")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"dash",
 "speed": 5.0
 }, {
@@ -106,25 +98,25 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 0.1,
 "texture": ExtResource("20_4gjji")
 }, {
-"duration": 1.0,
+"duration": 0.1,
 "texture": ExtResource("21_u2ulf")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("22_6e8lb")
 }, {
 "duration": 1.0,
 "texture": ExtResource("23_2gdjj")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("24_sc3ue")
 }, {
-"duration": 1.0,
+"duration": 0.1,
 "texture": ExtResource("25_lxlsd")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"jumping",
 "speed": 5.0
 }, {
@@ -155,7 +147,7 @@ polygon = PackedVector2Array(-15.4411745, 4.411764, -15.4411745, 6.617646, -13.9
 
 [node name="jump" type="Timer" parent="." unique_id=265082139]
 process_callback = 0
-wait_time = 0.3
+wait_time = 0.201
 one_shot = true
 
 [node name="player_animated" type="AnimatedSprite2D" parent="." unique_id=144585715]
@@ -163,23 +155,12 @@ texture_filter = 1
 texture_repeat = 1
 position = Vector2(-64, -64)
 sprite_frames = SubResource("SpriteFrames_v15d6")
-animation = &"dash"
-frame = 1
+animation = &"jumping"
 centered = false
 metadata/_dot_aseprite_importer_player = NodePath("../AnimationPlayer")
-metadata/_dot_aseprite_importer_sync_key = "17e8203476015211690783ecba6d18f9"
+metadata/_dot_aseprite_importer_sync_key = "95b28a8495a5f874926961415082d092"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1953212157]
 libraries/ = ExtResource("3_dqkch")
 
-[node name="dash" type="Timer" parent="." unique_id=2011883201]
-process_callback = 0
-wait_time = 0.4
-one_shot = true
-
-[node name="dashEnd" type="Timer" parent="." unique_id=679952938]
-wait_time = 0.6
-
 [connection signal="timeout" from="jump" to="." method="_on_jump_timeout"]
-[connection signal="timeout" from="dash" to="." method="_on_dash_timeout"]
-[connection signal="timeout" from="dashEnd" to="." method="_on_dash_end_timeout"]

@@ -33,6 +33,7 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		anim_player.play("jumping")
 		jumptimer.start()
+
 	if Input.is_action_just_pressed("attack") and not isattacking:
 		isattacking = true
 		anim_player.play("attacking")
@@ -41,31 +42,24 @@ func _physics_process(_delta: float) -> void:
 		
 		if not Input.is_action_pressed("move_forward") or not Input.is_action_pressed("move_backward"):
 			anim_player.play("idle")
-	if Input.is_action_just_pressed("dash") and not isdashing:
-		isdashing = true
-		anim_player.play("dash")
-		dashtimer.start()
-		await anim_player.animation_finished
-		isdashing = false
-		
-		if not Input.is_action_just_pressed("jump") or not Input.is_action_pressed("move_forward") or not Input.is_action_pressed("move_backward"):
-			anim_player.play("idle")
 	
-	#Gravity here
-	velocity.y += 20
+	if Input.is_action_just_pressed("dash") and not isdashing and isjump:
+		dash()
+	
+	if not isdashing:
+		velocity.y += 20  #gravity during normal scenario
+	else:
+		velocity.y = 0  #gravity during dashing
 	move_and_slide()
 		
-
-
+func dash():
+	isdashing = true
+	anim_player.play("dash")
+	velocity.x = 240
+	await anim_player.animation_finished
+	velocity.x = 0
+	isdashing = false
 func _on_jump_timeout() -> void:
 	velocity.y = -360
-	anim_player.play("idle")
-
-
-func _on_dash_timeout() -> void:
-	velocity.x = 240
-	dash_end.start()
-	
-
-func _on_dash_end_timeout() -> void:
-	velocity.x = 0
+	if Input.is_action_just_pressed("dash") and not isattacking:
+		dash()
