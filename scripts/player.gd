@@ -1,29 +1,40 @@
 extends CharacterBody2D
 
 @onready var jumptimer: Timer = $jump
-@onready var anim_player: AnimationPlayer = $AnimationPlayer
-@onready var dashtimer: Timer = $dash
-@onready var dash_end: Timer = $dashEnd
+@onready var anim_player: AnimationPlayer = $player_animated/AnimationPlayer
+@onready var player: AnimatedSprite2D = $player_animated
+@onready var timer: Timer = $Timer
+
 
 var isjump = false
 var isattacking = false
 var isdashing = false
-const SPEED = 1
+const SPEED = 50
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	
 	# This is my movement code
-	if Input.is_action_pressed("move_forward"):
-		position.x += SPEED 
+
+	var direction = Input.get_axis("move_backward", "move_forward")
+
+	if Input.is_action_pressed("move_forward") and not isdashing:
+		velocity.x = direction * SPEED 
 		if anim_player.current_animation != "attacking" and anim_player.current_animation != "jumping" and anim_player.current_animation != "dash":
 			anim_player.play("walking")
-	elif Input.is_action_pressed("move_backward"):
-		position.x -= SPEED
+	elif Input.is_action_pressed("move_backward") and not isdashing:
+		velocity.x = direction * SPEED 
 		if anim_player.current_animation != "attacking" and anim_player.current_animation != "jumping" and anim_player.current_animation != "dash":
 			anim_player.play("walking")
 	elif Input.is_action_just_released("move_forward") or Input.is_action_just_released("move_backward") and not isjump:
+		velocity.x = 0
 		if not isattacking and not isdashing:
 			anim_player.play("idle")
+
+	#Flips the player
+	if velocity.x > 0:
+		player.flip_h = false
+	if velocity.x < 0:
+		player.flip_h = true
 
 	if not is_on_floor():
 		isjump = true
@@ -33,6 +44,7 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		anim_player.play("jumping")
 		jumptimer.start()
+
 
 	if Input.is_action_just_pressed("attack") and not isattacking:
 		isattacking = true
@@ -55,11 +67,18 @@ func _physics_process(_delta: float) -> void:
 func dash():
 	isdashing = true
 	anim_player.play("dash")
-	velocity.x = 240
-	await anim_player.animation_finished
-	velocity.x = 0
-	isdashing = false
+	if player.flip_h:
+		velocity.x = -240
+	else:
+		velocity.x = 240
+	timer.start()
+
 func _on_jump_timeout() -> void:
 	velocity.y = -360
 	if Input.is_action_just_pressed("dash") and not isattacking:
 		dash()
+
+
+func _on_timer_timeout() -> void:
+	velocity.x = 0
+	isdashing = false

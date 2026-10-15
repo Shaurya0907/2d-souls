@@ -155,12 +155,19 @@ texture_filter = 1
 texture_repeat = 1
 position = Vector2(-64, -64)
 sprite_frames = SubResource("SpriteFrames_v15d6")
-animation = &"jumping"
+animation = &"dash"
 centered = false
-metadata/_dot_aseprite_importer_player = NodePath("../AnimationPlayer")
-metadata/_dot_aseprite_importer_sync_key = "95b28a8495a5f874926961415082d092"
+metadata/_dot_aseprite_importer_player = NodePath("AnimationPlayer")
+metadata/_dot_aseprite_importer_sync_key = "2c27e54334d3744974117911abc799f1"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1953212157]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="player_animated" unique_id=1953212157]
+root_node = NodePath("../..")
 libraries/ = ExtResource("3_dqkch")
 
+[node name="Timer" type="Timer" parent="." unique_id=1998868337]
+process_callback = 0
+wait_time = 0.46
+one_shot = true
+
 [connection signal="timeout" from="jump" to="." method="_on_jump_timeout"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
