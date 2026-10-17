@@ -9,9 +9,9 @@ extends CharacterBody2D
 var isjump = false
 var isattacking = false
 var isdashing = false
-const SPEED = 50
+const SPEED = 70
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	
 	# This is my movement code
 
@@ -25,7 +25,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = direction * SPEED 
 		if anim_player.current_animation != "attacking" and anim_player.current_animation != "jumping" and anim_player.current_animation != "dash":
 			anim_player.play("walking")
-	elif Input.is_action_just_released("move_forward") or Input.is_action_just_released("move_backward") and not isjump:
+	elif Input.is_action_just_released("move_forward") or Input.is_action_just_released("move_backward"):
 		velocity.x = 0
 		if not isattacking and not isdashing:
 			anim_player.play("idle")
@@ -77,7 +77,7 @@ func dash():
 	timer.start()
 
 func _on_jump_timeout() -> void:
-	velocity.y = -360
+	velocity.y = -480
 	if Input.is_action_just_pressed("dash") and not isattacking:
 		dash()
 

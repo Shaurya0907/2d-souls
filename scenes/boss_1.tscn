@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://bdh4pydfehq0q"]
+
+[ext_resource type="Texture2D" uid="uid://bp7uf4ew3p722" path="res://assets/boss/anims/Heavy Attack/1.png" id="1_uh0f8"]
+[ext_resource type="Texture2D" uid="uid://dosjah5qh0jts" path="res://assets/boss/anims/Heavy Attack/2.png" id="2_kfyxm"]
+[ext_resource type="Texture2D" uid="uid://elh8wdhfd0ef" path="res://assets/boss/anims/Heavy Attack/3.png" id="3_3kv24"]
+[ext_resource type="Texture2D" uid="uid://cusfr4t4k3eou" path="res://assets/boss/anims/Heavy Attack/4.png" id="4_ym4x4"]
+[ext_resource type="Texture2D" uid="uid://b7onbq0cfbfwy" path="res://assets/boss/anims/Heavy Attack/5.png" id="5_6ej81"]
+[ext_resource type="Texture2D" uid="uid://3mr3bkjcmm6u" path="res://assets/boss/anims/Heavy Attack/6.png" id="6_trowr"]
+[ext_resource type="Texture2D" uid="uid://dvsbbyuirxdsv" path="res://assets/boss/anims/Heavy Attack/7.png" id="7_3ed83"]
+[ext_resource type="Texture2D" uid="uid://b1ggqmec7u2om" path="res://assets/boss/anims/Heavy Attack/8.png" id="8_ebdhu"]
+[ext_resource type="Texture2D" uid="uid://b3sw41bygfary" path="res://assets/boss/anims/Heavy Attack/9.png" id="9_wyxrv"]
+[ext_resource type="Texture2D" uid="uid://bnv0x0vev4b2l" path="res://assets/boss/anims/Heavy Attack/10.png" id="10_f5da2"]
+[ext_resource type="Texture2D" uid="uid://bv8eqjnkwxrdf" path="res://assets/boss/anims/Heavy Attack/11.png" id="11_kwg0h"]
+[ext_resource type="Texture2D" uid="uid://cnablho3o5hbf" path="res://assets/boss/anims/Heavy Attack/12.png" id="12_dwa5r"]
+[ext_resource type="Texture2D" uid="uid://1wem56f7axcw" path="res://assets/boss/anims/Heavy Attack/13.png" id="13_whcl0"]
+[ext_resource type="Texture2D" uid="uid://dw7m8trni83t7" path="res://assets/boss/anims/Heavy Attack/14.png" id="14_7hch6"]
+[ext_resource type="Texture2D" uid="uid://nhgsm3cl81ml" path="res://assets/boss/anims/Heavy Attack/15.png" id="15_66efo"]
+[ext_resource type="Texture2D" uid="uid://7lrsboohjomw" path="res://assets/boss/anims/Heavy Attack/16.png" id="16_iahta"]
+[ext_resource type="AnimationLibrary" uid="uid://ctwr4febr5sw6" path="res://scenes/boss_1_animations.tres" id="17_kfyxm"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v15d6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_uh0f8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_kfyxm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_3kv24")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ym4x4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_6ej81")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_trowr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_3ed83")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_ebdhu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_wyxrv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_f5da2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_kwg0h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_dwa5r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_whcl0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_7hch6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_66efo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_iahta")
+}],
+"loop": 1,
+"name": &"heavy_attack",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v15d6"]
+size = Vector2(26, 50)
+
+[node name="boss1" type="CharacterBody2D" unique_id=944191825]
+
+[node name="boss_animated" type="AnimatedSprite2D" parent="." unique_id=1976457039]
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(-96, -96)
+sprite_frames = SubResource("SpriteFrames_v15d6")
+animation = &"heavy_attack"
+centered = false
+metadata/_dot_aseprite_importer_player = NodePath("AnimationPlayer")
+metadata/_dot_aseprite_importer_sync_key = "3616e5a978d313dfb17cf39c396eb4a7"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="boss_animated" unique_id=104328593]
+libraries/ = ExtResource("17_kfyxm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=9410133]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_v15d6")

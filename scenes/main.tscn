@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cg0tibvwejdr1" path="res://assets/environment/sky.png" id="3_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://babnaayj5u5r2" path="res://scenes/player.tscn" id="3_sugp2"]
 [ext_resource type="Texture2D" uid="uid://il1pk0oh73wr" path="res://assets/environment/mountains.png" id="4_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://bdh4pydfehq0q" path="res://scenes/boss_1.tscn" id="5_tbgi4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sugp2"]
 texture = ExtResource("1_o5qli")
@@ -73,6 +74,9 @@ shape = SubResource("RectangleShape2D_v15d6")
 position = Vector2(487, 135)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_v15d6")
+
+[node name="boss1" parent="." unique_id=944191825 instance=ExtResource("5_tbgi4")]
+position = Vector2(268, 184)
 
 [node name="player" parent="." unique_id=1501936433 instance=ExtResource("3_sugp2")]
 position = Vector2(113, 198)
