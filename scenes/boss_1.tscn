@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://bdh4pydfehq0q"]
 
+[ext_resource type="Script" uid="uid://qgnymm6tf0gn" path="res://scripts/boss.gd" id="1_3kv24"]
 [ext_resource type="Texture2D" uid="uid://bp7uf4ew3p722" path="res://assets/boss/anims/Heavy Attack/1.png" id="1_uh0f8"]
 [ext_resource type="Texture2D" uid="uid://dosjah5qh0jts" path="res://assets/boss/anims/Heavy Attack/2.png" id="2_kfyxm"]
 [ext_resource type="Texture2D" uid="uid://elh8wdhfd0ef" path="res://assets/boss/anims/Heavy Attack/3.png" id="3_3kv24"]
@@ -21,73 +22,85 @@
 [sub_resource type="SpriteFrames" id="SpriteFrames_v15d6"]
 animations = [{
 "frames": [{
-"duration": 1.0,
+"duration": 0.4,
 "texture": ExtResource("1_uh0f8")
 }, {
-"duration": 1.0,
+"duration": 0.7,
 "texture": ExtResource("2_kfyxm")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("3_3kv24")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("4_ym4x4")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("5_6ej81")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("6_trowr")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("7_3ed83")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("8_ebdhu")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("9_wyxrv")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("10_f5da2")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("11_kwg0h")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("12_dwa5r")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("13_whcl0")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("14_7hch6")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("15_66efo")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("16_iahta")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"heavy_attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.4,
+"texture": ExtResource("1_uh0f8")
+}],
+"loop": 1,
+"name": &"idle",
 "speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v15d6"]
 size = Vector2(26, 50)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rm1bd"]
+size = Vector2(480, 7)
+
 [node name="boss1" type="CharacterBody2D" unique_id=944191825]
+script = ExtResource("1_3kv24")
 
 [node name="boss_animated" type="AnimatedSprite2D" parent="." unique_id=1976457039]
 texture_filter = 1
 texture_repeat = 1
-position = Vector2(-96, -96)
 sprite_frames = SubResource("SpriteFrames_v15d6")
 animation = &"heavy_attack"
 centered = false
+offset = Vector2(-96, -96)
 metadata/_dot_aseprite_importer_player = NodePath("AnimationPlayer")
-metadata/_dot_aseprite_importer_sync_key = "3616e5a978d313dfb17cf39c396eb4a7"
+metadata/_dot_aseprite_importer_sync_key = "f2c0a792b98c1b7404ce98945d7cc16f"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="boss_animated" unique_id=104328593]
 libraries/ = ExtResource("17_kfyxm")
@@ -95,3 +108,30 @@ libraries/ = ExtResource("17_kfyxm")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=9410133]
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_v15d6")
+
+[node name="heavyintro" type="Timer" parent="." unique_id=1893079544]
+process_callback = 0
+wait_time = 0.33
+one_shot = true
+
+[node name="heavymid" type="Timer" parent="." unique_id=1127500106]
+process_callback = 0
+wait_time = 1.2899999999999998
+one_shot = true
+
+[node name="left_detection" type="Area2D" parent="." unique_id=415411165]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="left_detection" unique_id=929661311]
+position = Vector2(-240, 20.5)
+shape = SubResource("RectangleShape2D_rm1bd")
+debug_color = Color(0, 0.6312515, 0.46744835, 0.41960785)
+
+[node name="right_detection" type="Area2D" parent="." unique_id=1617452333]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="right_detection" unique_id=1874212061]
+position = Vector2(240, 20.5)
+shape = SubResource("RectangleShape2D_rm1bd")
+debug_color = Color(0, 0.6312515, 0.46744835, 0.41960785)
+
+[connection signal="timeout" from="heavyintro" to="." method="_on_heavyintro_timeout"]
+[connection signal="timeout" from="heavymid" to="." method="_on_heavymid_timeout"]

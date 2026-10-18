@@ -169,10 +169,10 @@ one_shot = true
 [node name="player_animated" type="AnimatedSprite2D" parent="." unique_id=144585715]
 texture_filter = 1
 texture_repeat = 1
-position = Vector2(-64, -64)
 sprite_frames = SubResource("SpriteFrames_v15d6")
 animation = &"attacking"
 centered = false
+offset = Vector2(-64, -64)
 metadata/_dot_aseprite_importer_player = NodePath("AnimationPlayer")
 metadata/_dot_aseprite_importer_sync_key = "a7e92eb2ffe3ed1cc2e612d4f9f6e6fe"
 

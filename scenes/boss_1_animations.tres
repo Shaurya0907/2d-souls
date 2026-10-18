@@ -1,8 +1,7 @@
 [gd_resource type="AnimationLibrary" format=3 uid="uid://ctwr4febr5sw6"]
 
 [sub_resource type="Animation" id="Animation_txf7c"]
-length = 3.2000000000000006
-loop_mode = 1
+length = 1.6199999988079077
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -22,13 +21,42 @@ tracks/1/path = NodePath(".:frame")
 tracks/1/interp = 0
 tracks/1/loop_wrap = false
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8, 3),
+"times": PackedFloat32Array(0, 0.08, 0.22, 0.32, 0.42, 0.52, 0.62, 0.71999997, 0.82, 0.92, 1.02, 1.12, 1.22, 1.32, 1.42, 1.52),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 }
 
+[sub_resource type="Animation" id="Animation_agh0l"]
+length = 0.0800000011920929
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 0
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 0
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [resource]
 _data = {
-&"heavy_attack": SubResource("Animation_txf7c")
+&"heavy_attack": SubResource("Animation_txf7c"),
+&"idle": SubResource("Animation_agh0l")
 }
