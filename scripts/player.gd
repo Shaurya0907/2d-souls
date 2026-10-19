@@ -16,6 +16,7 @@ var isjump = false
 var isattacking = false
 var isdashing = false
 var isparry = false
+var has_dashed = false
 const SPEED = 70
 
 func _ready():
@@ -28,11 +29,19 @@ func _physics_process(_delta: float) -> void:
 	var direction = Input.get_axis("move_backward", "move_forward")
 
 	if Input.is_action_pressed("move_forward") and not isdashing:
-		velocity.x = direction * SPEED 
+		if not isdashing:
+			velocity.x = direction * SPEED 
+		else:
+			velocity.x = direction * 240
+		
 		if anim_player.current_animation not in ["attacking", "jumping", "dash", "parry", "down_parry"]:
 			anim_player.play("walking")
 	elif Input.is_action_pressed("move_backward") and not isdashing:
-		velocity.x = direction * SPEED 
+		if not isdashing:
+			velocity.x = direction * SPEED 
+		else:
+			velocity.x = direction * 240
+			
 		if anim_player.current_animation not in ["attacking", "jumping", "dash", "parry", "down_parry"]:
 			anim_player.play("walking")
 	elif Input.is_action_just_released("move_forward") or Input.is_action_just_released("move_backward"):
@@ -69,13 +78,14 @@ func _physics_process(_delta: float) -> void:
 		if not Input.is_action_pressed("move_forward") or not Input.is_action_pressed("move_backward"):
 			anim_player.play("idle")
 	
-	if Input.is_action_just_pressed("dash") and not isdashing and isjump:
+	if Input.is_action_just_pressed("dash") and not isdashing and isjump and not has_dashed:
 		dash()
 	
 	if Input.is_action_just_pressed("parry"):
 		parry()
 		
-	
+	if is_on_floor():	
+		has_dashed = false
 	
 	if not isdashing:
 		velocity.y += 20  #gravity during normal scenario
@@ -89,6 +99,7 @@ func health():
 	pass
 
 func dash():
+	has_dashed = true
 	isdashing = true
 	anim_player.play("dash")
 	if player.flip_h:
@@ -110,8 +121,6 @@ func parry():
 			anim_player.play("idle")
 func _on_jump_timeout() -> void:
 	velocity.y = -480
-	if Input.is_action_just_pressed("dash") and not isattacking:
-		dash()
 
 
 func _on_timer_timeout() -> void:
