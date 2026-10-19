@@ -79,7 +79,7 @@ shape = SubResource("RectangleShape2D_v15d6")
 position = Vector2(268, 184)
 
 [node name="player" parent="." unique_id=1501936433 instance=ExtResource("3_sugp2")]
-position = Vector2(113, 198)
+position = Vector2(186, 191)
 
 [node name="sky" type="Parallax2D" parent="." unique_id=1858830456]
 scroll_scale = Vector2(0.1, 0.1)

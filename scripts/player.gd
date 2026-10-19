@@ -4,6 +4,7 @@ extends CharacterBody2D
 @onready var anim_player: AnimationPlayer = $player_animated/AnimationPlayer
 @onready var player: AnimatedSprite2D = $player_animated
 @onready var timer: Timer = $Timer
+@onready var boss: CharacterBody2D = $"../boss1"
 
 
 var isjump = false
@@ -12,7 +13,7 @@ var isdashing = false
 const SPEED = 70
 
 func _physics_process(_delta: float) -> void:
-	
+		
 	# This is my movement code
 
 	var direction = Input.get_axis("move_backward", "move_forward")
@@ -63,10 +64,16 @@ func _physics_process(_delta: float) -> void:
 	else:
 		velocity.y = 0  #gravity during dashing
 	move_and_slide()
-	
+		
 	if Input.is_action_just_pressed("parry"):
 		anim_player.play("parry")
-		
+
+
+func pushed():
+	#velocity.x = boss.velocity.x
+	#print("it is being pushed")
+	pass
+
 func dash():
 	isdashing = true
 	anim_player.play("dash")

@@ -133,5 +133,11 @@ position = Vector2(240, 20.5)
 shape = SubResource("RectangleShape2D_rm1bd")
 debug_color = Color(0, 0.6312515, 0.46744835, 0.41960785)
 
+[node name="knockback" type="Timer" parent="." unique_id=1735547863]
+process_callback = 0
+wait_time = 0.3
+one_shot = true
+
 [connection signal="timeout" from="heavyintro" to="." method="_on_heavyintro_timeout"]
 [connection signal="timeout" from="heavymid" to="." method="_on_heavymid_timeout"]
+[connection signal="timeout" from="knockback" to="." method="_on_knockback_timeout"]

@@ -6,6 +6,9 @@ extends CharacterBody2D
 @onready var left_detection: Area2D = $left_detection
 @onready var right_detection: Area2D = $right_detection
 @onready var player: CharacterBody2D = $"../player"
+@onready var knockback: Timer = $knockback
+
+
 
 var isattacking = false
 
@@ -15,7 +18,6 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("attackboss"):
 		isattacking = true
 		anim_player.play("heavy_attack")
-		print(anim_player.current_animation)
 		heavyintro.start()
 	
 	if player.global_position.x > boss.global_position.x:
@@ -25,8 +27,23 @@ func _physics_process(_delta: float) -> void:
 		if not isattacking:
 			boss.flip_h = false
 	
-	print(player.global_position.x,"   ",boss.global_position.x)
+	
 	move_and_slide()
+	
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		if collider.name == "player":
+			#if collider.velocity.x < velocity.x:
+				if isattacking:
+					if not boss.flip_h:
+						velocity.x = -240
+					else:
+						velocity.x = 240
+					collider.velocity.x = velocity.x + 20
+					knockback.start()
+					
+
 
 func _on_heavyintro_timeout() -> void:
 	if not boss.flip_h:
@@ -40,4 +57,7 @@ func _on_heavymid_timeout() -> void:
 	velocity.x = 0
 	isattacking = false
 	anim_player.play("idle")	
-	print(anim_player.current_animation)
+
+
+func _on_knockback_timeout() -> void:
+	player.velocity.x = 0
