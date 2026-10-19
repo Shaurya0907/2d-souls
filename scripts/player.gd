@@ -5,13 +5,18 @@ extends CharacterBody2D
 @onready var player: AnimatedSprite2D = $player_animated
 @onready var timer: Timer = $Timer
 @onready var boss: CharacterBody2D = $"../boss1"
+@onready var attack_area: Area2D = $Area2D
+@onready var attack_start: Timer = $attack_start
 
-
+var player_health = 100
 var isjump = false
 var isattacking = false
 var isdashing = false
 var isparry = false
 const SPEED = 70
+
+func _ready():
+	attack_area.monitoring = false
 
 func _physics_process(_delta: float) -> void:
 		
@@ -47,10 +52,11 @@ func _physics_process(_delta: float) -> void:
 		anim_player.play("jumping")
 		jumptimer.start()
 
-
+#ATTACK
 	if Input.is_action_just_pressed("attack") and not isattacking:
 		isattacking = true
 		anim_player.play("attacking")
+		attack_start.start()
 		await anim_player.animation_finished
 		isattacking = false
 		
@@ -72,8 +78,10 @@ func _physics_process(_delta: float) -> void:
 	
 	move_and_slide()
 	
+	print(boss.boss_health)
 
-
+func health():
+	pass
 
 func dash():
 	isdashing = true
@@ -104,3 +112,19 @@ func _on_jump_timeout() -> void:
 func _on_timer_timeout() -> void:
 	velocity.x = 0
 	isdashing = false
+
+
+func _on_attack_start_timeout() -> void:
+		attack_area.monitoring = true
+			
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body.name == "boss1":
+		boss.boss_health -= 10
+	if anim_player.current_animation == "attacking":
+		await anim_player.animation_finished
+		attack_area.monitoring = false
+
+
+func _on_area_2d_body_exited(body: Node2D) -> void:
+	attack_area.monitoring = false

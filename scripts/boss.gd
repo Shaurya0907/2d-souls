@@ -11,6 +11,7 @@ extends CharacterBody2D
 
 
 var isattacking = false
+var boss_health = 100
 
 var SPEED = 5
 
