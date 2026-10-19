@@ -25,30 +25,25 @@ func _ready():
 func _physics_process(_delta: float) -> void:
 		
 	# This is my movement code
-
-	var direction = Input.get_axis("move_backward", "move_forward")
-
-	if Input.is_action_pressed("move_forward") and not isdashing:
-		if not isdashing:
-			velocity.x = direction * SPEED 
-		else:
-			velocity.x = direction * 240
 		
-		if anim_player.current_animation not in ["attacking", "jumping", "dash", "parry", "down_parry"]:
-			anim_player.play("walking")
-	elif Input.is_action_pressed("move_backward") and not isdashing:
-		if not isdashing:
+	var direction = Input.get_axis("move_backward", "move_forward")
+	if not isdashing:	
+		if Input.is_action_pressed("move_forward") and not isdashing:
 			velocity.x = direction * SPEED 
-		else:
-			velocity.x = direction * 240
-			
-		if anim_player.current_animation not in ["attacking", "jumping", "dash", "parry", "down_parry"]:
-			anim_player.play("walking")
-	elif Input.is_action_just_released("move_forward") or Input.is_action_just_released("move_backward"):
-		velocity.x = 0
-		if not isattacking and not isdashing and not isparry:
-			anim_player.play("idle")
-
+			if anim_player.current_animation not in ["attacking", "jumping", "dash", "parry", "down_parry"]:
+				anim_player.play("walking")
+		elif Input.is_action_pressed("move_backward") and not isdashing:
+			velocity.x = direction * SPEED 
+			if anim_player.current_animation not in ["attacking", "jumping", "dash", "parry", "down_parry"]:
+				anim_player.play("walking")
+		elif Input.is_action_just_released("move_forward") or Input.is_action_just_released("move_backward"):
+			velocity.x = 0
+			if not isattacking and not isdashing and not isparry:
+				anim_player.play("idle")
+		velocity.y += 20  #gravity during normal scenario
+	
+	else:
+		velocity.y = 0  #gravity during dashing
 	#Flips the player
 	if velocity.x > 0:
 		player.flip_h = false
@@ -57,7 +52,7 @@ func _physics_process(_delta: float) -> void:
 	if velocity.x < 0:
 		player.flip_h = true
 		attack_collision.position.x = -15.25
-	print(attack_area.position.x)
+	
 	if not is_on_floor():
 		isjump = true
 	else:
@@ -87,10 +82,6 @@ func _physics_process(_delta: float) -> void:
 	if is_on_floor():	
 		has_dashed = false
 	
-	if not isdashing:
-		velocity.y += 20  #gravity during normal scenario
-	else:
-		velocity.y = 0  #gravity during dashing
 	
 	move_and_slide()
 	

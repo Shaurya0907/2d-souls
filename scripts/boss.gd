@@ -1,7 +1,7 @@
 extends CharacterBody2D
 @onready var anim_player: AnimationPlayer = $boss_animated/AnimationPlayer
-@onready var heavyintro: Timer = $heavyintro
-@onready var heavymid: Timer = $heavymid
+@onready var heavyintro: Timer = $heavy_attack/heavyintro
+@onready var heavymid: Timer = $heavy_attack/heavymid
 @onready var boss: AnimatedSprite2D = $boss_animated
 @onready var left_detection: Area2D = $left_detection
 @onready var right_detection: Area2D = $right_detection

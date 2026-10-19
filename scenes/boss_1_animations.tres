@@ -1,7 +1,35 @@
 [gd_resource type="AnimationLibrary" format=3 uid="uid://ctwr4febr5sw6"]
 
+[sub_resource type="Animation" id="Animation_h5o3x"]
+length = 2.5199999928474437
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 0
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"coolest_attack"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 0
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.14, 0.28, 0.42, 0.52, 0.62, 0.71999997, 0.82, 0.92, 1.02, 1.12, 1.22, 1.32, 1.42, 1.52, 1.62, 1.72, 1.82, 1.92, 2.02, 2.12, 2.22, 2.32, 2.42),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+}
+
 [sub_resource type="Animation" id="Animation_txf7c"]
-length = 1.6199999988079077
+length = 1.6199999988079075
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -57,6 +85,7 @@ tracks/1/keys = {
 
 [resource]
 _data = {
+&"coolest_attack": SubResource("Animation_h5o3x"),
 &"heavy_attack": SubResource("Animation_txf7c"),
 &"idle": SubResource("Animation_agh0l")
 }
