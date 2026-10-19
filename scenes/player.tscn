@@ -18,9 +18,14 @@
 [ext_resource type="Texture2D" uid="uid://qwa7w27lv5fv" path="res://assets/player/fixed anims/dash/4.png" id="16_hhpqf"]
 [ext_resource type="Texture2D" uid="uid://eeb1cmqgy0b3" path="res://assets/player/fixed anims/dash/5.png" id="17_g5jhy"]
 [ext_resource type="Texture2D" uid="uid://bv2fye0eay2hh" path="res://assets/player/fixed anims/dash/6.png" id="18_holxr"]
+[ext_resource type="Texture2D" uid="uid://dgsh6wwa7qgoe" path="res://assets/player/fixed anims/down_parry/1.png" id="18_jc3p3"]
+[ext_resource type="Texture2D" uid="uid://2wgr0stmhjle" path="res://assets/player/fixed anims/down_parry/3.png" id="19_hax0n"]
 [ext_resource type="Texture2D" uid="uid://r8blrq8kdvxn" path="res://assets/player/fixed anims/jumping/1.png" id="20_4gjji"]
+[ext_resource type="Texture2D" uid="uid://d0swklgfdpd1l" path="res://assets/player/fixed anims/down_parry/4.png" id="20_t4otl"]
+[ext_resource type="Texture2D" uid="uid://bb2jwsciy8qv0" path="res://assets/player/fixed anims/down_parry/2.png" id="21_j2b1d"]
 [ext_resource type="Texture2D" uid="uid://cuxopmskmrvrn" path="res://assets/player/fixed anims/jumping/2.png" id="21_u2ulf"]
 [ext_resource type="Texture2D" uid="uid://bvuv5etstuast" path="res://assets/player/fixed anims/jumping/3.png" id="22_6e8lb"]
+[ext_resource type="Texture2D" uid="uid://b0fvt2tp3mvbg" path="res://assets/player/fixed anims/down_parry/5.png" id="22_cs1tg"]
 [ext_resource type="Texture2D" uid="uid://c7to6kgwahaix" path="res://assets/player/fixed anims/jumping/4.png" id="23_2gdjj"]
 [ext_resource type="Texture2D" uid="uid://df2y4pgwxsvu5" path="res://assets/player/fixed anims/jumping/5.png" id="24_sc3ue"]
 [ext_resource type="Texture2D" uid="uid://uscvjefmo6co" path="res://assets/player/fixed anims/jumping/6.png" id="25_lxlsd"]
@@ -93,6 +98,26 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
+"duration": 0.5,
+"texture": ExtResource("18_jc3p3")
+}, {
+"duration": 0.5,
+"texture": ExtResource("19_hax0n")
+}, {
+"duration": 0.5,
+"texture": ExtResource("20_t4otl")
+}, {
+"duration": 0.5,
+"texture": ExtResource("21_j2b1d")
+}, {
+"duration": 0.5,
+"texture": ExtResource("22_cs1tg")
+}],
+"loop": 0,
+"name": &"down_parry",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 0.7,
 "texture": ExtResource("26_ha2mi")
 }],
@@ -132,6 +157,9 @@ animations = [{
 }, {
 "duration": 0.5,
 "texture": ExtResource("27_487ah")
+}, {
+"duration": 0.2,
+"texture": ExtResource("25_wnwbv")
 }],
 "loop": 0,
 "name": &"parry",
@@ -170,11 +198,11 @@ one_shot = true
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = SubResource("SpriteFrames_v15d6")
-animation = &"attacking"
+animation = &"parry"
 centered = false
 offset = Vector2(-64, -64)
 metadata/_dot_aseprite_importer_player = NodePath("AnimationPlayer")
-metadata/_dot_aseprite_importer_sync_key = "a7e92eb2ffe3ed1cc2e612d4f9f6e6fe"
+metadata/_dot_aseprite_importer_sync_key = "fcd7ec7c1d599db0365bfdee4f4a1a99"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="player_animated" unique_id=1953212157]
 root_node = NodePath("../..")

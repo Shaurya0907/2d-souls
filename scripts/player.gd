@@ -10,6 +10,7 @@ extends CharacterBody2D
 var isjump = false
 var isattacking = false
 var isdashing = false
+var isparry = false
 const SPEED = 70
 
 func _physics_process(_delta: float) -> void:
@@ -20,15 +21,15 @@ func _physics_process(_delta: float) -> void:
 
 	if Input.is_action_pressed("move_forward") and not isdashing:
 		velocity.x = direction * SPEED 
-		if anim_player.current_animation != "attacking" and anim_player.current_animation != "jumping" and anim_player.current_animation != "dash":
+		if anim_player.current_animation not in ["attacking", "jumping", "dash", "parry", "down_parry"]:
 			anim_player.play("walking")
 	elif Input.is_action_pressed("move_backward") and not isdashing:
 		velocity.x = direction * SPEED 
-		if anim_player.current_animation != "attacking" and anim_player.current_animation != "jumping" and anim_player.current_animation != "dash":
+		if anim_player.current_animation not in ["attacking", "jumping", "dash", "parry", "down_parry"]:
 			anim_player.play("walking")
 	elif Input.is_action_just_released("move_forward") or Input.is_action_just_released("move_backward"):
 		velocity.x = 0
-		if not isattacking and not isdashing:
+		if not isattacking and not isdashing and not isparry:
 			anim_player.play("idle")
 
 	#Flips the player
@@ -59,20 +60,20 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("dash") and not isdashing and isjump:
 		dash()
 	
+	if Input.is_action_just_pressed("parry"):
+		parry()
+		
+	
+	
 	if not isdashing:
 		velocity.y += 20  #gravity during normal scenario
 	else:
 		velocity.y = 0  #gravity during dashing
+	
 	move_and_slide()
-		
-	if Input.is_action_just_pressed("parry"):
-		anim_player.play("parry")
+	
 
 
-func pushed():
-	#velocity.x = boss.velocity.x
-	#print("it is being pushed")
-	pass
 
 func dash():
 	isdashing = true
@@ -83,6 +84,17 @@ func dash():
 		velocity.x = 240
 	timer.start()
 
+func parry():
+	isparry = true
+	if not isjump:
+		anim_player.play("parry")
+	else:
+		anim_player.play("down_parry")
+	await anim_player.animation_finished
+	isparry = false
+	
+	if not Input.is_action_pressed("move_forward") or not Input.is_action_pressed("move_backward"):
+			anim_player.play("idle")
 func _on_jump_timeout() -> void:
 	velocity.y = -480
 	if Input.is_action_just_pressed("dash") and not isattacking:
