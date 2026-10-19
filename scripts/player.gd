@@ -5,8 +5,11 @@ extends CharacterBody2D
 @onready var player: AnimatedSprite2D = $player_animated
 @onready var timer: Timer = $Timer
 @onready var boss: CharacterBody2D = $"../boss1"
-@onready var attack_area: Area2D = $Area2D
+@onready var attack_area: Area2D = $player_animated/Area2D
 @onready var attack_start: Timer = $attack_start
+@onready var attack_collision: CollisionShape2D = $player_animated/Area2D/CollisionShape2D
+@onready var HEALTH: RichTextLabel = $"../RichTextLabel2"
+@onready var disable_attacking_area: Timer = $disable_attacking_area
 
 var player_health = 100
 var isjump = false
@@ -40,9 +43,12 @@ func _physics_process(_delta: float) -> void:
 	#Flips the player
 	if velocity.x > 0:
 		player.flip_h = false
+		attack_collision.position.x = 15.25
+		
 	if velocity.x < 0:
 		player.flip_h = true
-
+		attack_collision.position.x = -15.25
+	print(attack_area.position.x)
 	if not is_on_floor():
 		isjump = true
 	else:
@@ -78,7 +84,6 @@ func _physics_process(_delta: float) -> void:
 	
 	move_and_slide()
 	
-	print(boss.boss_health)
 
 func health():
 	pass
@@ -116,15 +121,15 @@ func _on_timer_timeout() -> void:
 
 func _on_attack_start_timeout() -> void:
 		attack_area.monitoring = true
+		disable_attacking_area.start()
 			
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.name == "boss1":
 		boss.boss_health -= 10
-	if anim_player.current_animation == "attacking":
-		await anim_player.animation_finished
-		attack_area.monitoring = false
+		disable_attacking_area.start()
+		HEALTH.text = str(boss.boss_health)
 
 
-func _on_area_2d_body_exited(body: Node2D) -> void:
+func _on_disable_attacking_area_timeout() -> void:
 	attack_area.monitoring = false

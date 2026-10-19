@@ -103,3 +103,15 @@ centered = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1498183244]
 anchor_mode = 0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1404901791]
+offset_left = 4.0
+offset_right = 145.0
+offset_bottom = 40.0
+text = "Boss Health: "
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="." unique_id=2014697969]
+offset_left = 101.0
+offset_right = 242.0
+offset_bottom = 40.0
+text = "100"

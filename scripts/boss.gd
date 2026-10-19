@@ -46,6 +46,11 @@ func _physics_process(_delta: float) -> void:
 					
 
 
+	if boss_health < 0:
+		boss_health = 0
+	
+	if boss_health == 0:
+		queue_free()
 func _on_heavyintro_timeout() -> void:
 	if not boss.flip_h:
 		velocity.x = -240
