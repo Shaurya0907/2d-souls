@@ -187,14 +187,11 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h7gvf"]
 size = Vector2(20, 50)
 
-[sub_resource type="BoxMesh" id="BoxMesh_rm1bd"]
-size = Vector3(7.77, 1, 1)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v15d6"]
 size = Vector2(26, 50)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rm1bd"]
-size = Vector2(352, 107)
+size = Vector2(352, 140)
 
 [node name="boss1" type="CharacterBody2D" unique_id=944191825]
 script = ExtResource("1_3kv24")
@@ -203,7 +200,7 @@ script = ExtResource("1_3kv24")
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = SubResource("SpriteFrames_v15d6")
-animation = &"coolest_attack"
+animation = &"heavy_attack"
 centered = false
 offset = Vector2(-96, -96)
 metadata/_dot_aseprite_importer_player = NodePath("AnimationPlayer")
@@ -218,9 +215,6 @@ libraries/ = ExtResource("17_kfyxm")
 position = Vector2(-23, -1)
 shape = SubResource("RectangleShape2D_h7gvf")
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="boss_animated/Area2D/CollisionShape2D" unique_id=1642050173]
-mesh = SubResource("BoxMesh_rm1bd")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=9410133]
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_v15d6")
@@ -228,7 +222,7 @@ shape = SubResource("RectangleShape2D_v15d6")
 [node name="jump_attack_detection" type="Area2D" parent="." unique_id=415411165]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="jump_attack_detection" unique_id=929661311]
-position = Vector2(0, -29.5)
+position = Vector2(0, -13)
 shape = SubResource("RectangleShape2D_rm1bd")
 debug_color = Color(0, 0.6312515, 0.46744835, 0.41960785)
 
@@ -258,6 +252,7 @@ one_shot = true
 
 [node name="attack_delay" type="Timer" parent="." unique_id=71545116]
 process_callback = 0
+wait_time = 0.5
 autostart = true
 
 [node name="attack_start" type="Timer" parent="." unique_id=403271364]
@@ -267,11 +262,16 @@ one_shot = true
 
 [node name="disable_attack_area" type="Timer" parent="." unique_id=1938467845]
 process_callback = 0
+wait_time = 0.5
 one_shot = true
 
 [node name="jump_attack_start" type="Timer" parent="." unique_id=1514602478]
 process_callback = 0
 wait_time = 0.8
+one_shot = true
+
+[node name="heavy_attack_length" type="Timer" parent="." unique_id=35473656]
+process_callback = 0
 one_shot = true
 
 [connection signal="body_entered" from="boss_animated/Area2D" to="." method="_on_area_2d_body_entered"]
@@ -285,3 +285,4 @@ one_shot = true
 [connection signal="timeout" from="attack_start" to="." method="_on_attack_start_timeout"]
 [connection signal="timeout" from="disable_attack_area" to="." method="_on_disable_attack_area_timeout"]
 [connection signal="timeout" from="jump_attack_start" to="." method="_on_jump_attack_start_timeout"]
+[connection signal="timeout" from="heavy_attack_length" to="." method="_on_heavy_attack_length_timeout"]

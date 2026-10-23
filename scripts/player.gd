@@ -65,12 +65,6 @@ func _physics_process(_delta: float) -> void:
 		anim_player.play("jumping")
 		jumptimer.start()
 
-#HEALTH
-	if player_health < 0:
-		player_health = 0
-	if player_health == 0:
-		queue_free()
-		queue_freed = true
 
 #ATTACK
 	if Input.is_action_just_pressed("attack") and not isattacking:
@@ -98,6 +92,12 @@ func _physics_process(_delta: float) -> void:
 
 func damage(damage_value):
 	player_health -= damage_value
+	if player_health < 0:
+		player_health = 0
+	if player_health == 0:
+		queue_free()
+		get_tree().quit()
+		queue_freed = true
 	player_health_value.text = str(player_health)
 
 func dash():

@@ -14,10 +14,11 @@ extends CharacterBody2D
 @onready var player_char: CharacterBody2D = $"../player"
 @onready var jump_attack_detection: Area2D = $jump_attack_detection
 @onready var jump_attack_start: Timer = $jump_attack_start
+@onready var heavy_attack_length: Timer = $heavy_attack_length
 
 
 
-var attacks_list = ["coolest_attack"]
+var attacks_list = ["heavy_attack","coolest_attack"]
 var queue_freed = false
 var isattacking = false
 var boss_health = 100
@@ -99,12 +100,15 @@ func _on_heavyintro_timeout() -> void:
 	else:
 		velocity.x = 240
 	heavymid.start()
-
+	
+#ATTACKS
 func attacks(attack_name):
 	if attack_name == "coolest_attack":
-		coolest_attack()
+		if not isjumping and not isattacking:	
+			coolest_attack()
 	elif attack_name == "heavy_attack":
-		heavy_attack()
+		if not isattacking and not isjumping:
+			heavy_attack()
 
 
 func _on_heavymid_timeout() -> void:
@@ -134,7 +138,7 @@ func _on_attack_delay_timeout() -> void:
 
 func _on_attack_start_timeout() -> void:
 	attack_area.monitoring = true
-	disable_attack_area.start()
+	heavy_attack_length.start()
 	
 
 func _on_disable_attack_area_timeout() -> void:
@@ -144,14 +148,13 @@ func _on_disable_attack_area_timeout() -> void:
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.name == "player":
 		if isattacking and is_instance_valid(player):
-			player_char.damage(5)
+			player_char.damage(10)
 			disable_attack_area.start()
 			
 
 
 func _on_jump_attack_detection_body_entered(body: Node2D) -> void:
 	if body.name == "player":
-		print("HELLOOO")
 		if isjumping and is_instance_valid(player):
 			if player_char.is_on_floor():
 				player_char.damage(20)
@@ -163,7 +166,10 @@ func _on_jump_attack_detection_body_entered(body: Node2D) -> void:
 
 
 func _on_jump_attack_start_timeout() -> void:
-	if isjumping:
-		jump_attack_detection.monitoring = true
-		disable_attack_area.start()
+	jump_attack_detection.monitoring = true
+	disable_attack_area.start()
 	
+
+
+func _on_heavy_attack_length_timeout() -> void:
+	disable_attack_area.start()
