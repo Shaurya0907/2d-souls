@@ -8,9 +8,12 @@ extends CharacterBody2D
 @onready var attack_area: Area2D = $player_animated/Area2D
 @onready var attack_start: Timer = $attack_start
 @onready var attack_collision: CollisionShape2D = $player_animated/Area2D/CollisionShape2D
-@onready var HEALTH: RichTextLabel = $"../RichTextLabel2"
+@onready var boss_health: RichTextLabel = $"../boss_health_value"
 @onready var disable_attacking_area: Timer = $disable_attacking_area
+@onready var player_health_value: RichTextLabel = $"../player_health_value"
 
+
+var queue_freed = false
 var player_health = 100
 var isjump = false
 var isattacking = false
@@ -62,6 +65,13 @@ func _physics_process(_delta: float) -> void:
 		anim_player.play("jumping")
 		jumptimer.start()
 
+#HEALTH
+	if player_health < 0:
+		player_health = 0
+	if player_health == 0:
+		queue_free()
+		queue_freed = true
+
 #ATTACK
 	if Input.is_action_just_pressed("attack") and not isattacking:
 		isattacking = true
@@ -86,8 +96,9 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 	
 
-func health():
-	pass
+func damage(damage_value):
+	player_health -= damage_value
+	player_health_value.text = str(player_health)
 
 func dash():
 	has_dashed = true
@@ -128,7 +139,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.name == "boss1":
 		boss.boss_health -= 10
 		disable_attacking_area.start()
-		HEALTH.text = str(boss.boss_health)
+		boss_health.text = str(boss.boss_health)
 
 
 func _on_disable_attacking_area_timeout() -> void:

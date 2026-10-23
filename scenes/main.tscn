@@ -104,14 +104,26 @@ centered = false
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1498183244]
 anchor_mode = 0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1404901791]
+[node name="boss_health" type="RichTextLabel" parent="." unique_id=1404901791]
 offset_left = 4.0
 offset_right = 145.0
 offset_bottom = 40.0
 text = "Boss Health: "
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="." unique_id=2014697969]
+[node name="player_health" type="RichTextLabel" parent="." unique_id=961792257]
+offset_left = 321.0
+offset_right = 462.0
+offset_bottom = 40.0
+text = "Player Health: "
+
+[node name="boss_health_value" type="RichTextLabel" parent="." unique_id=2014697969]
 offset_left = 101.0
 offset_right = 242.0
+offset_bottom = 40.0
+text = "100"
+
+[node name="player_health_value" type="RichTextLabel" parent="." unique_id=2056301402]
+offset_left = 430.0
+offset_right = 571.0
 offset_bottom = 40.0
 text = "100"
