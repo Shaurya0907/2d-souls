@@ -1,10 +1,7 @@
 [gd_scene format=3 uid="uid://babnaayj5u5r2"]
 
 [ext_resource type="Script" uid="uid://dba4pu1yesca7" path="res://scripts/player.gd" id="1_g2els"]
-[ext_resource type="Texture2D" uid="uid://dgrqcfkfxv5sb" path="res://assets/player/fixed anims/attacking/1.png" id="2_wqfne"]
 [ext_resource type="AnimationLibrary" uid="uid://crdtbdgky7im7" path="res://scenes/player_animations.tres" id="3_dqkch"]
-[ext_resource type="Texture2D" uid="uid://b3dcdf4chmuxo" path="res://assets/player/fixed anims/attacking/2.png" id="3_wnwbv"]
-[ext_resource type="Texture2D" uid="uid://bnscxucgdmuf6" path="res://assets/player/fixed anims/attacking/3.png" id="4_gl8cc"]
 [ext_resource type="Texture2D" uid="uid://btixs07vwn8wg" path="res://assets/player/fixed anims/attacking/4.png" id="5_487ah"]
 [ext_resource type="Texture2D" uid="uid://ctc75wut4vn2r" path="res://assets/player/fixed anims/attacking/5.png" id="6_md1ol"]
 [ext_resource type="Texture2D" uid="uid://dsnwm1k1jam0h" path="res://assets/player/fixed anims/attacking/6.png" id="7_bj30b"]
@@ -12,7 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://4tnhq35n5mhk" path="res://assets/player/fixed anims/attacking/8.png" id="9_hax0n"]
 [ext_resource type="Texture2D" uid="uid://b5jd6f26fnwbe" path="res://assets/player/fixed anims/attacking/9.png" id="10_t4otl"]
 [ext_resource type="Texture2D" uid="uid://c1muqwuh722px" path="res://assets/player/fixed anims/attacking/10.png" id="11_j2b1d"]
-[ext_resource type="Texture2D" uid="uid://camlq8rstpqth" path="res://assets/player/fixed anims/attacking/11.png" id="12_cs1tg"]
 [ext_resource type="Texture2D" uid="uid://do5bp7o8coul1" path="res://assets/player/fixed anims/dash/2.png" id="14_giy8y"]
 [ext_resource type="Texture2D" uid="uid://chhgowcxcigfr" path="res://assets/player/fixed anims/dash/3.png" id="15_fdfoy"]
 [ext_resource type="Texture2D" uid="uid://qwa7w27lv5fv" path="res://assets/player/fixed anims/dash/4.png" id="16_hhpqf"]
@@ -20,11 +16,9 @@
 [ext_resource type="Texture2D" uid="uid://bv2fye0eay2hh" path="res://assets/player/fixed anims/dash/6.png" id="18_holxr"]
 [ext_resource type="Texture2D" uid="uid://dgsh6wwa7qgoe" path="res://assets/player/fixed anims/down_parry/1.png" id="18_jc3p3"]
 [ext_resource type="Texture2D" uid="uid://2wgr0stmhjle" path="res://assets/player/fixed anims/down_parry/3.png" id="19_hax0n"]
-[ext_resource type="Texture2D" uid="uid://r8blrq8kdvxn" path="res://assets/player/fixed anims/jumping/1.png" id="20_4gjji"]
 [ext_resource type="Texture2D" uid="uid://d0swklgfdpd1l" path="res://assets/player/fixed anims/down_parry/4.png" id="20_t4otl"]
 [ext_resource type="Texture2D" uid="uid://bb2jwsciy8qv0" path="res://assets/player/fixed anims/down_parry/2.png" id="21_j2b1d"]
 [ext_resource type="Texture2D" uid="uid://cuxopmskmrvrn" path="res://assets/player/fixed anims/jumping/2.png" id="21_u2ulf"]
-[ext_resource type="Texture2D" uid="uid://bvuv5etstuast" path="res://assets/player/fixed anims/jumping/3.png" id="22_6e8lb"]
 [ext_resource type="Texture2D" uid="uid://b0fvt2tp3mvbg" path="res://assets/player/fixed anims/down_parry/5.png" id="22_cs1tg"]
 [ext_resource type="Texture2D" uid="uid://c7to6kgwahaix" path="res://assets/player/fixed anims/jumping/4.png" id="23_2gdjj"]
 [ext_resource type="Texture2D" uid="uid://df2y4pgwxsvu5" path="res://assets/player/fixed anims/jumping/5.png" id="24_sc3ue"]
@@ -40,19 +34,10 @@
 [sub_resource type="SpriteFrames" id="SpriteFrames_v15d6"]
 animations = [{
 "frames": [{
-"duration": 0.3,
-"texture": ExtResource("2_wqfne")
-}, {
-"duration": 0.4,
-"texture": ExtResource("3_wnwbv")
-}, {
-"duration": 0.5,
-"texture": ExtResource("4_gl8cc")
-}, {
-"duration": 0.5,
+"duration": 0.1,
 "texture": ExtResource("5_487ah")
 }, {
-"duration": 0.5,
+"duration": 0.1,
 "texture": ExtResource("6_md1ol")
 }, {
 "duration": 0.5,
@@ -69,9 +54,6 @@ animations = [{
 }, {
 "duration": 0.4,
 "texture": ExtResource("11_j2b1d")
-}, {
-"duration": 0.3,
-"texture": ExtResource("12_cs1tg")
 }],
 "loop": 0,
 "name": &"attacking",
@@ -127,13 +109,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 0.1,
-"texture": ExtResource("20_4gjji")
-}, {
-"duration": 0.1,
 "texture": ExtResource("21_u2ulf")
-}, {
-"duration": 0.5,
-"texture": ExtResource("22_6e8lb")
 }, {
 "duration": 1.0,
 "texture": ExtResource("23_2gdjj")
@@ -194,19 +170,19 @@ script = ExtResource("1_g2els")
 
 [node name="jump" type="Timer" parent="." unique_id=265082139]
 process_callback = 0
-wait_time = 0.201
+wait_time = 0.08
 one_shot = true
 
 [node name="player_animated" type="AnimatedSprite2D" parent="." unique_id=144585715]
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = SubResource("SpriteFrames_v15d6")
-animation = &"attacking"
-frame = 4
+animation = &"jumping"
+frame = 1
 centered = false
 offset = Vector2(-64, -64)
 metadata/_dot_aseprite_importer_player = NodePath("AnimationPlayer")
-metadata/_dot_aseprite_importer_sync_key = "fcd7ec7c1d599db0365bfdee4f4a1a99"
+metadata/_dot_aseprite_importer_sync_key = "06b0cfb648d4ac8a11631226e683b2f7"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="player_animated" unique_id=1953212157]
 root_node = NodePath("../..")
@@ -229,7 +205,7 @@ shape = SubResource("RectangleShape2D_v15d6")
 
 [node name="attack_start" type="Timer" parent="." unique_id=73059026]
 process_callback = 0
-wait_time = 0.32
+wait_time = 0.15
 one_shot = true
 
 [node name="disable_attacking_area" type="Timer" parent="." unique_id=1583080453]
