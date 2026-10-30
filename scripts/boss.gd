@@ -4,21 +4,21 @@ extends CharacterBody2D
 @onready var heavymid: Timer = $heavy_attack/heavymid
 @onready var boss: AnimatedSprite2D = $boss_animated
 @onready var player: CharacterBody2D = $"../player"
-@onready var knockback: Timer = $knockback
 @onready var before_ascent: Timer = $"coolest_attack/before ascent"
 @onready var attack_delay: Timer = $attack_delay
 @onready var attack_area: Area2D = $boss_animated/Area2D
 @onready var attack_collision: CollisionShape2D = $boss_animated/Area2D/CollisionShape2D
 @onready var attack_start: Timer = $attack_start
 @onready var disable_attack_area: Timer = $disable_attack_area
-@onready var player_char: CharacterBody2D = $"../player"
 @onready var jump_attack_detection: Area2D = $jump_attack_detection
 @onready var jump_attack_start: Timer = $jump_attack_start
 @onready var heavy_attack_length: Timer = $heavy_attack_length
+@onready var impact_timer: Timer = $impact_timer
+@onready var impact: AnimatedSprite2D = $impact
 
 
 
-var attacks_list = ["heavy_attack","coolest_attack"]
+var attacks_list = ["coolest_attack", "heavy_attack"]
 var queue_freed = false
 var isattacking = false
 var boss_health = 100
@@ -33,7 +33,7 @@ func _ready():
 	jump_attack_detection.monitoring = false
 
 func _physics_process(delta: float) -> void:
-		
+	var player_coords = Vector2(player.global_position.x, player.global_position.y)
 	# I forgot about the gravity for boss XDD
 	if boss.flip_h:
 		attack_collision.position.x = 23.0
@@ -44,7 +44,6 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	if is_on_floor() and not isattacking:
 		velocity.x = 0
-		
 
 	
 	#HEALTH
@@ -67,14 +66,22 @@ func _physics_process(delta: float) -> void:
 			var collision = get_slide_collision(i)
 			var collider = collision.get_collider()
 			if collider.name == "player":
-				#if collider.velocity.x < velocity.x:
-					if isattacking:
-						if not boss.flip_h:
-							velocity.x = -240
-						else:
-							velocity.x = 240
-						collider.velocity.x = velocity.x + 20
-						knockback.start()
+				var normal = collision.get_normal()
+				if normal.dot(Vector2.DOWN):
+					if player_coords.x < 240:
+						player.velocity.x = 480
+					else:
+						player.velocity.x = -480
+				if isattacking:
+					if not boss.flip_h:
+						velocity.x = -240
+					else:
+						velocity.x = 240
+												
+					collider.velocity.x = velocity.x + 20
+
+
+# attackssssssssssssssss here
 func heavy_attack():
 	isattacking = true
 	anim_player.play("heavy_attack")
@@ -87,13 +94,12 @@ func coolest_attack():
 	
 	isjumping = true
 	anim_player.play("coolest_attack")
+	impact_timer.start()
 	jump_attack_start.start()
 	before_ascent.start()
 	await anim_player.animation_finished
 	isjumping = false
 	
-	
-
 func _on_heavyintro_timeout() -> void:
 	if not boss.flip_h:
 		velocity.x = -240
@@ -101,7 +107,7 @@ func _on_heavyintro_timeout() -> void:
 		velocity.x = 240
 	heavymid.start()
 	
-#ATTACKS
+#FOR RANDOM ATTACKSS
 func attacks(attack_name):
 	if attack_name == "coolest_attack":
 		if not isjumping and not isattacking:	
@@ -110,17 +116,12 @@ func attacks(attack_name):
 		if not isattacking and not isjumping:
 			heavy_attack()
 
-
+# timers and area part here
 func _on_heavymid_timeout() -> void:
 	velocity.x = 0
 	isattacking = false
 	anim_player.play("idle")	
 	attack_delay.start()
-
-
-func _on_knockback_timeout() -> void:
-	if is_instance_valid(player):
-		player.velocity.x = 0
 
 
 func _on_before_ascent_timeout() -> void:
@@ -147,8 +148,8 @@ func _on_disable_attack_area_timeout() -> void:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.name == "player":
-		if isattacking and is_instance_valid(player):
-			player_char.damage(10)
+		if isattacking and is_instance_valid(player) and not player.isparry:
+			player.damage(10)
 			disable_attack_area.start()
 			
 
@@ -156,11 +157,11 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 func _on_jump_attack_detection_body_entered(body: Node2D) -> void:
 	if body.name == "player":
 		if isjumping and is_instance_valid(player):
-			if player_char.is_on_floor():
-				player_char.damage(20)
+			if player.is_on_floor():
+				player.damage(20)
 				disable_attack_area.start()
 			else:
-				player_char.damage(10)
+				player.damage(10)
 				disable_attack_area.start()
 	
 
@@ -173,3 +174,11 @@ func _on_jump_attack_start_timeout() -> void:
 
 func _on_heavy_attack_length_timeout() -> void:
 	disable_attack_area.start()
+
+
+func _on_impact_timer_timeout() -> void:
+	impact.visible = true
+	anim_player.play("impact")
+	await anim_player.animation_finished
+	impact.visible = false
+	

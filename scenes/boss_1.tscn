@@ -4,16 +4,22 @@
 [ext_resource type="Texture2D" uid="uid://bp7uf4ew3p722" path="res://assets/boss/anims/Heavy Attack/1.png" id="1_uh0f8"]
 [ext_resource type="Texture2D" uid="uid://dosjah5qh0jts" path="res://assets/boss/anims/Heavy Attack/2.png" id="2_kfyxm"]
 [ext_resource type="Texture2D" uid="uid://dn6q1xdevpd3w" path="res://assets/boss/anims/Coolest Attack/1.png" id="2_x8mh5"]
+[ext_resource type="Texture2D" uid="uid://b3fx68xesa34s" path="res://assets/boss/anims/impact/1.png" id="2_y6nd6"]
 [ext_resource type="Texture2D" uid="uid://elh8wdhfd0ef" path="res://assets/boss/anims/Heavy Attack/3.png" id="3_3kv24"]
 [ext_resource type="Texture2D" uid="uid://bco8r2bgf1mt" path="res://assets/boss/anims/Coolest Attack/2.png" id="3_hm3ln"]
+[ext_resource type="Texture2D" uid="uid://b07f1bcd8tmbi" path="res://assets/boss/anims/impact/2.png" id="3_wvu6w"]
+[ext_resource type="Texture2D" uid="uid://ba8vwbe276itq" path="res://assets/boss/anims/impact/3.png" id="4_jgv65"]
 [ext_resource type="Texture2D" uid="uid://5itv1h6uf0a0" path="res://assets/boss/anims/Coolest Attack/3.png" id="4_n5ci1"]
 [ext_resource type="Texture2D" uid="uid://cusfr4t4k3eou" path="res://assets/boss/anims/Heavy Attack/4.png" id="4_ym4x4"]
 [ext_resource type="Texture2D" uid="uid://b7onbq0cfbfwy" path="res://assets/boss/anims/Heavy Attack/5.png" id="5_6ej81"]
 [ext_resource type="Texture2D" uid="uid://dsh7hrrm1p7hc" path="res://assets/boss/anims/Coolest Attack/4.png" id="5_r2q6c"]
+[ext_resource type="Texture2D" uid="uid://c5qw8uwe4ftv1" path="res://assets/boss/anims/impact/4.png" id="5_vuvo7"]
+[ext_resource type="Texture2D" uid="uid://c8tt5ee3wy3ar" path="res://assets/boss/anims/impact/5.png" id="6_jmxpo"]
 [ext_resource type="Texture2D" uid="uid://3mr3bkjcmm6u" path="res://assets/boss/anims/Heavy Attack/6.png" id="6_trowr"]
 [ext_resource type="Texture2D" uid="uid://caly67x336itm" path="res://assets/boss/anims/Coolest Attack/5.png" id="6_xfwgx"]
 [ext_resource type="Texture2D" uid="uid://dvsbbyuirxdsv" path="res://assets/boss/anims/Heavy Attack/7.png" id="7_3ed83"]
 [ext_resource type="Texture2D" uid="uid://cv7lxb7dur3s8" path="res://assets/boss/anims/Coolest Attack/6.png" id="7_txaef"]
+[ext_resource type="Texture2D" uid="uid://j0yquyhmgefa" path="res://assets/boss/anims/impact/6.png" id="7_xxict"]
 [ext_resource type="Texture2D" uid="uid://b1ggqmec7u2om" path="res://assets/boss/anims/Heavy Attack/8.png" id="8_ebdhu"]
 [ext_resource type="Texture2D" uid="uid://4cg1lh0gyimg" path="res://assets/boss/anims/Coolest Attack/7.png" id="8_y6nd6"]
 [ext_resource type="Texture2D" uid="uid://c5d5cre11fo0v" path="res://assets/boss/anims/Coolest Attack/8.png" id="9_wvu6w"]
@@ -76,19 +82,19 @@ animations = [{
 "duration": 0.34,
 "texture": ExtResource("11_vuvo7")
 }, {
-"duration": 0.35,
+"duration": 0.1,
 "texture": ExtResource("12_jmxpo")
 }, {
-"duration": 0.35,
+"duration": 0.1,
 "texture": ExtResource("13_xxict")
 }, {
-"duration": 0.35,
+"duration": 0.1,
 "texture": ExtResource("14_yhmoa")
 }, {
-"duration": 0.35,
+"duration": 0.1,
 "texture": ExtResource("15_113pl")
 }, {
-"duration": 0.35,
+"duration": 0.1,
 "texture": ExtResource("16_kamro")
 }, {
 "duration": 0.5,
@@ -187,11 +193,34 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h7gvf"]
 size = Vector2(20, 50)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_v15d6"]
-size = Vector2(26, 50)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rm1bd"]
-size = Vector2(352, 140)
+size = Vector2(120, 140)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rm1bd"]
+animations = [{
+"frames": [{
+"duration": 0.2,
+"texture": ExtResource("2_y6nd6")
+}, {
+"duration": 0.2,
+"texture": ExtResource("3_wvu6w")
+}, {
+"duration": 0.2,
+"texture": ExtResource("4_jgv65")
+}, {
+"duration": 0.2,
+"texture": ExtResource("5_vuvo7")
+}, {
+"duration": 0.2,
+"texture": ExtResource("6_jmxpo")
+}, {
+"duration": 0.2,
+"texture": ExtResource("7_xxict")
+}],
+"loop": 0,
+"name": &"impact",
+"speed": 5.0
+}]
 
 [node name="boss1" type="CharacterBody2D" unique_id=944191825]
 script = ExtResource("1_3kv24")
@@ -200,11 +229,11 @@ script = ExtResource("1_3kv24")
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = SubResource("SpriteFrames_v15d6")
-animation = &"heavy_attack"
+animation = &"coolest_attack"
 centered = false
 offset = Vector2(-96, -96)
 metadata/_dot_aseprite_importer_player = NodePath("AnimationPlayer")
-metadata/_dot_aseprite_importer_sync_key = "25a0247edede18782292a265cf1dd40a"
+metadata/_dot_aseprite_importer_sync_key = "6a39734dd14af62621b34b28df7f0c23"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="boss_animated" unique_id=104328593]
 libraries/ = ExtResource("17_kfyxm")
@@ -215,21 +244,12 @@ libraries/ = ExtResource("17_kfyxm")
 position = Vector2(-23, -1)
 shape = SubResource("RectangleShape2D_h7gvf")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=9410133]
-position = Vector2(0, -1)
-shape = SubResource("RectangleShape2D_v15d6")
-
 [node name="jump_attack_detection" type="Area2D" parent="." unique_id=415411165]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="jump_attack_detection" unique_id=929661311]
 position = Vector2(0, -13)
 shape = SubResource("RectangleShape2D_rm1bd")
 debug_color = Color(0, 0.6312515, 0.46744835, 0.41960785)
-
-[node name="knockback" type="Timer" parent="." unique_id=1735547863]
-process_callback = 0
-wait_time = 0.3
-one_shot = true
 
 [node name="heavy_attack" type="Node2D" parent="." unique_id=1765189330]
 
@@ -274,9 +294,27 @@ one_shot = true
 process_callback = 0
 one_shot = true
 
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=1441648352]
+scale = Vector2(1.3269722, 2.5519884)
+polygon = PackedVector2Array(0.75359523, -6.6614723, 2.2607856, -6.6614723, 2.2607856, -8.228877, 3.014381, -8.228877, 3.014381, -9.01258, 6.028762, -9.01258, 6.028762, -8.6207285, 6.782357, -8.6207285, 6.782357, -8.228877, 7.5359526, -8.228877, 7.5359526, -7.837026, 8.289548, -7.837026, 8.289548, -7.0533237, 9.043142, -7.0533237, 9.043142, -4.7022157, 8.289548, -4.7022157, 8.289548, -1.1755539, 9.043142, -1.1755539, 9.043142, -0.7837026, 9.796738, -0.7837026, 9.796738, 7.0533237, 9.043142, 7.0533237, 9.043142, 7.4451747, 8.289548, 7.4451747, 8.289548, 7.837026, 6.782357, 7.837026, 6.782357, 8.228877, 6.028762, 8.228877, 6.028762, 9.404431, 4.521571, 9.404431, 4.521571, 8.228877, 3.014381, 8.228877, 3.014381, 9.404431, 1.5071905, 9.404431, 1.5071905, 7.837026, -0.75359523, 7.837026, -0.75359523, 7.4451747, -1.5071905, 7.4451747, -1.5071905, 7.0533237, -2.2607856, 7.0533237, -2.2607856, 8.6207285, -3.014381, 8.6207285, -3.014381, 9.01258, -4.521571, 9.01258, -4.521571, 8.6207285, -5.2751665, 8.6207285, -5.2751665, 8.228877, -4.521571, 8.228877, -4.521571, 5.8777695, -5.2751665, 5.8777695, -5.2751665, 5.094067, -4.521571, 5.094067, -4.521571, 4.7022157, -6.028762, 4.7022157, -6.028762, 5.485918, -6.782357, 5.485918, -6.782357, 5.094067, -7.5359526, 5.094067, -7.5359526, 4.3103642, -8.289548, 4.3103642, -8.289548, 3.918513, -9.043142, 3.918513, -9.043142, 3.1348104, -9.796738, 3.1348104, -9.796738, 0, -9.043142, 0, -9.043142, -0.7837026, -8.289548, -0.7837026, -8.289548, -1.1755539, -7.5359526, -1.1755539, -7.5359526, -1.9592565, -6.782357, -1.9592565, -6.782357, -2.3511078, -6.028762, -2.3511078, -6.028762, -6.269621, -5.2751665, -6.269621, -5.2751665, -8.228877, -4.521571, -8.228877, -4.521571, -9.404431, -3.7679763, -9.404431, -3.7679763, -9.796283, -3.014381, -9.796283, -3.014381, -9.01258, -2.2607856, -9.01258, -2.2607856, -6.269621, -1.5071905, -6.269621, 0.75359523, -6.269621)
+
+[node name="impact" type="AnimatedSprite2D" parent="." unique_id=150217115]
+visible = false
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(0, -24)
+sprite_frames = SubResource("SpriteFrames_rm1bd")
+animation = &"impact"
+metadata/_dot_aseprite_importer_player = NodePath("../boss_animated/AnimationPlayer")
+metadata/_dot_aseprite_importer_sync_key = "7a469a617189b3011978969c8e124e16"
+
+[node name="impact_timer" type="Timer" parent="." unique_id=237319645]
+process_callback = 0
+wait_time = 1.2999999999999998
+one_shot = true
+
 [connection signal="body_entered" from="boss_animated/Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="jump_attack_detection" to="." method="_on_jump_attack_detection_body_entered"]
-[connection signal="timeout" from="knockback" to="." method="_on_knockback_timeout"]
 [connection signal="timeout" from="heavy_attack/heavyintro" to="." method="_on_heavyintro_timeout"]
 [connection signal="timeout" from="heavy_attack/heavymid" to="." method="_on_heavymid_timeout"]
 [connection signal="timeout" from="coolest_attack/before ascent" to="." method="_on_before_ascent_timeout"]
@@ -286,3 +324,4 @@ one_shot = true
 [connection signal="timeout" from="disable_attack_area" to="." method="_on_disable_attack_area_timeout"]
 [connection signal="timeout" from="jump_attack_start" to="." method="_on_jump_attack_start_timeout"]
 [connection signal="timeout" from="heavy_attack_length" to="." method="_on_heavy_attack_length_timeout"]
+[connection signal="timeout" from="impact_timer" to="." method="_on_impact_timer_timeout"]

@@ -11,6 +11,7 @@ extends CharacterBody2D
 @onready var boss_health: RichTextLabel = $"../boss_health_value"
 @onready var disable_attacking_area: Timer = $disable_attacking_area
 @onready var player_health_value: RichTextLabel = $"../player_health_value"
+@onready var retry: Control = $"../Retry"
 
 
 var queue_freed = false
@@ -24,7 +25,8 @@ const SPEED = 70
 
 func _ready():
 	attack_area.monitoring = false
-
+	add_collision_exception_with(boss) #learnt a new function
+	
 func _physics_process(_delta: float) -> void:
 		
 	# This is my movement code
@@ -95,9 +97,10 @@ func damage(damage_value):
 	if player_health < 0:
 		player_health = 0
 	if player_health == 0:
-		queue_free()
-		get_tree().quit()
+		retry.visible = true
+		get_tree().paused = true
 		queue_freed = true
+		hide()
 	player_health_value.text = str(player_health)
 
 func dash():

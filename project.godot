@@ -36,6 +36,10 @@ window/stretch/aspect="expand"
 
 enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/dot_aseprite_importer/plugin.cfg", "res://addons/godot_super-wakatime/plugin.cfg", "res://addons/nklbdev.aseprite_importers/plugin.cfg")
 
+[gui]
+
+theme/default_font_multichannel_signed_distance_field=true
+
 [input]
 
 move_forward={
@@ -94,6 +98,7 @@ cool_attack={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"

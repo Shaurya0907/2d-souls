@@ -14,7 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://qwa7w27lv5fv" path="res://assets/player/fixed anims/dash/4.png" id="16_hhpqf"]
 [ext_resource type="Texture2D" uid="uid://eeb1cmqgy0b3" path="res://assets/player/fixed anims/dash/5.png" id="17_g5jhy"]
 [ext_resource type="Texture2D" uid="uid://bv2fye0eay2hh" path="res://assets/player/fixed anims/dash/6.png" id="18_holxr"]
-[ext_resource type="Texture2D" uid="uid://dgsh6wwa7qgoe" path="res://assets/player/fixed anims/down_parry/1.png" id="18_jc3p3"]
 [ext_resource type="Texture2D" uid="uid://2wgr0stmhjle" path="res://assets/player/fixed anims/down_parry/3.png" id="19_hax0n"]
 [ext_resource type="Texture2D" uid="uid://d0swklgfdpd1l" path="res://assets/player/fixed anims/down_parry/4.png" id="20_t4otl"]
 [ext_resource type="Texture2D" uid="uid://bb2jwsciy8qv0" path="res://assets/player/fixed anims/down_parry/2.png" id="21_j2b1d"]
@@ -80,9 +79,6 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 0.5,
-"texture": ExtResource("18_jc3p3")
-}, {
 "duration": 0.5,
 "texture": ExtResource("19_hax0n")
 }, {
@@ -162,9 +158,6 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rm1bd"]
 size = Vector2(12.5, 23)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_v15d6"]
-size = Vector2(19, 23)
-
 [node name="player" type="CharacterBody2D" unique_id=1501936433]
 script = ExtResource("1_g2els")
 
@@ -177,12 +170,11 @@ one_shot = true
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = SubResource("SpriteFrames_v15d6")
-animation = &"jumping"
-frame = 1
+animation = &"idle"
 centered = false
 offset = Vector2(-64, -64)
 metadata/_dot_aseprite_importer_player = NodePath("AnimationPlayer")
-metadata/_dot_aseprite_importer_sync_key = "06b0cfb648d4ac8a11631226e683b2f7"
+metadata/_dot_aseprite_importer_sync_key = "afcb463a907ee86cf51c528e27d658c3"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="player_animated" unique_id=1953212157]
 root_node = NodePath("../..")
@@ -199,10 +191,6 @@ process_callback = 0
 wait_time = 0.46
 one_shot = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=382160323]
-position = Vector2(-0.5, -1.5)
-shape = SubResource("RectangleShape2D_v15d6")
-
 [node name="attack_start" type="Timer" parent="." unique_id=73059026]
 process_callback = 0
 wait_time = 0.15
@@ -210,6 +198,11 @@ one_shot = true
 
 [node name="disable_attacking_area" type="Timer" parent="." unique_id=1583080453]
 wait_time = 0.05
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=111967164]
+position = Vector2(1, -1)
+scale = Vector2(2.4041605, 1.1256182)
+polygon = PackedVector2Array(-9.150804, 6.218805, -8.7348585, 6.218805, -8.7348585, 5.3304043, -8.3189125, 5.3304043, -8.3189125, 4.4420037, -7.487021, 4.4420037, -7.487021, 3.553603, -6.2391844, 3.553603, -6.2391844, 2.6652021, -5.407293, 2.6652021, -5.407293, 1.7768015, -4.1594563, 1.7768015, -4.1594563, 0.88840073, -2.9116192, 0.88840073, -2.9116192, 0, -2.4956737, 0, -2.4956737, -0.88840073, -1.6637825, -0.88840073, -1.6637825, -2.6652021, -1.6637825, -7.107206, -2.9116192, -7.107206, -2.9116192, -7.995607, -2.0797281, -7.995607, -2.0797281, -8.884007, -0.83189124, -8.884007, -0.83189124, -9.772408, 0, -9.772408, 0, -10.660809, 0.8318912, -10.660809, 0.8318912, -9.772408, 1.6637825, -9.772408, 1.6637825, -8.884007, 2.9116194, -8.884007, 2.9116194, -7.995607, 4.1594563, -7.995607, 4.1594563, -7.107206, 2.9116194, -7.107206, 2.9116194, -1.7768013, 3.327565, -1.7768013, 3.327565, 0, 2.0797281, 0, 2.0797281, 0.88840073, 1.6637825, 0.88840073, 1.6637825, 7.107206, 1.2478368, 7.107206, 1.2478368, 7.9956064, 0.8318912, 7.9956064, 0.8318912, 9.7724085, 0.41594562, 9.7724085, 0.41594562, 7.9956064, 0, 7.9956064, 0, 9.7724085, -0.83189124, 9.7724085, -2.9116192, 9.7724085, -2.9116192, 8.884007, -3.327565, 8.884007, -3.327565, 7.9956064, -2.9116192, 7.9956064, -2.9116192, 7.107206, -4.575402, 7.107206, -4.575402, 7.9956064, -5.8232384, 7.9956064, -5.8232384, 8.884007, -6.2391844, 8.884007, -6.2391844, 9.7724085, -8.3189125, 9.7724085, -8.3189125, 8.884007, -9.150804, 8.884007)
 
 [connection signal="timeout" from="jump" to="." method="_on_jump_timeout"]
 [connection signal="body_entered" from="player_animated/Area2D" to="." method="_on_area_2d_body_entered"]

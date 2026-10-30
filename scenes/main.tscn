@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://babnaayj5u5r2" path="res://scenes/player.tscn" id="3_sugp2"]
 [ext_resource type="Texture2D" uid="uid://il1pk0oh73wr" path="res://assets/environment/mountains.png" id="4_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://bdh4pydfehq0q" path="res://scenes/boss_1.tscn" id="5_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://buwi0nd4ideoc" path="res://scenes/retry.tscn" id="6_tefeu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sugp2"]
 texture = ExtResource("1_o5qli")
@@ -127,3 +128,7 @@ offset_left = 430.0
 offset_right = 571.0
 offset_bottom = 40.0
 text = "100"
+
+[node name="Retry" parent="." unique_id=1956011329 instance=ExtResource("6_tefeu")]
+process_mode = 3
+visible = false
