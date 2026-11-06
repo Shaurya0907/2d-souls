@@ -296,7 +296,7 @@ sprite_frames = SubResource("SpriteFrames_rm1bd")
 animation = &"impact"
 frame = 4
 metadata/_dot_aseprite_importer_player = NodePath("../boss_animated/AnimationPlayer")
-metadata/_dot_aseprite_importer_sync_key = "7a469a617189b3011978969c8e124e16"
+metadata/_dot_aseprite_importer_sync_key = "bfcf0ca83705f5cf5b5c0b32a7050f7c"
 
 [node name="impact_timer" type="Timer" parent="." unique_id=237319645]
 process_callback = 0

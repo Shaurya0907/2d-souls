@@ -79,7 +79,7 @@ func _physics_process(_delta: float) -> void:
 		if not Input.is_action_pressed("move_forward") or not Input.is_action_pressed("move_backward"):
 			anim_player.play("idle")
 	
-	if Input.is_action_just_pressed("dash") and not isdashing and isjump and not has_dashed:
+	if Input.is_action_just_pressed("dash") and not isdashing and not has_dashed:
 		dash()
 	
 	if Input.is_action_just_pressed("parry"):
