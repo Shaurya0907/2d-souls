@@ -158,15 +158,15 @@ func _on_jump_attack_detection_body_entered(body: Node2D) -> void:
 	if body.name == "player":
 		if isjumping and is_instance_valid(player):
 			if player.is_on_floor():
-				player.damage(20)
+				player.fall_damage(20)
 				disable_attack_area.start()
 			else:
-				player.damage(10)
+				player.fall_damage(10)
 				disable_attack_area.start()
 	
 
 
-func _on_jump_attack_start_timeout() -> void:
+func _on_jump_attack_start_timeout() -> void:	
 	jump_attack_detection.monitoring = true
 	disable_attack_area.start()
 	

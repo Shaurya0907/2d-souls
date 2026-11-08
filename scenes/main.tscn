@@ -132,3 +132,5 @@ text = "100"
 [node name="Retry" parent="." unique_id=1956011329 instance=ExtResource("6_tefeu")]
 process_mode = 3
 visible = false
+
+[editable path="boss1"]

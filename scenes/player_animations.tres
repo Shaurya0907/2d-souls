@@ -30,6 +30,33 @@ tracks/1/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6]
 }
 
+[sub_resource type="Animation" id="Animation_8aw07"]
+length = 1.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("player_animated:animation")
+tracks/0/interp = 0
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"damage"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("player_animated:frame")
+tracks/1/interp = 0
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
 [sub_resource type="Animation" id="Animation_yax1o"]
 length = 0.45999999344348913
 tracks/0/type = "value"
@@ -199,6 +226,7 @@ tracks/1/keys = {
 _data = {
 &"RESET": SubResource("Animation_1uc1c"),
 &"attacking": SubResource("Animation_i6ugd"),
+&"damage": SubResource("Animation_8aw07"),
 &"dash": SubResource("Animation_yax1o"),
 &"down_parry": SubResource("Animation_6m3p5"),
 &"idle": SubResource("Animation_43423"),

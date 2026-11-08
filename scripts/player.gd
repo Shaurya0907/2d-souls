@@ -12,6 +12,8 @@ extends CharacterBody2D
 @onready var disable_attacking_area: Timer = $disable_attacking_area
 @onready var player_health_value: RichTextLabel = $"../player_health_value"
 @onready var retry: Control = $"../Retry"
+@onready var fall_damage_timer: Timer = $fall_damage_timer
+@onready var boss_animated: AnimatedSprite2D = $"../boss1/boss_animated"
 
 
 var queue_freed = false
@@ -21,6 +23,7 @@ var isattacking = false
 var isdashing = false
 var isparry = false
 var has_dashed = false
+var is_damage = false
 const SPEED = 70
 
 func _ready():
@@ -32,23 +35,25 @@ func _physics_process(_delta: float) -> void:
 	# This is my movement code
 		
 	var direction = Input.get_axis("move_backward", "move_forward")
-	if not isdashing:	
-		if Input.is_action_pressed("move_forward") and not isdashing:
+	if not isdashing and not is_damage:	
+		if Input.is_action_pressed("move_forward") and not isdashing and not is_damage:
 			velocity.x = direction * SPEED 
 			if anim_player.current_animation not in ["attacking", "jumping", "dash", "parry", "down_parry"]:
 				anim_player.play("walking")
-		elif Input.is_action_pressed("move_backward") and not isdashing:
+		elif Input.is_action_pressed("move_backward") and not isdashing and not is_damage:
 			velocity.x = direction * SPEED 
 			if anim_player.current_animation not in ["attacking", "jumping", "dash", "parry", "down_parry"]:
 				anim_player.play("walking")
 		elif Input.is_action_just_released("move_forward") or Input.is_action_just_released("move_backward"):
 			velocity.x = 0
-			if not isattacking and not isdashing and not isparry:
+			if not isattacking and not isdashing and not isparry and not is_damage:
 				anim_player.play("idle")
-		velocity.y += 20  #gravity during normal scenario
 	
-	else:
+	elif isdashing:
 		velocity.y = 0  #gravity during dashing
+
+	if not isdashing:
+		velocity.y += 20  #gravity during normal scenario
 	#Flips the player
 	if velocity.x > 0:
 		player.flip_h = false
@@ -103,6 +108,28 @@ func damage(damage_value):
 		hide()
 	player_health_value.text = str(player_health)
 
+func fall_damage(damage_value):
+	is_damage = true
+	player_health -= damage_value
+	if player_health < 0:
+		player_health = 0
+	if player_health == 0:
+		retry.visible = true
+		get_tree().paused = true
+		queue_freed = true
+		hide()
+	player_health_value.text = str(player_health)
+	velocity.y = -360
+	if boss_animated.flip_h:
+		velocity.x += 100
+	else:
+		velocity.x -= 100
+	anim_player.play("damage")
+	fall_damage_timer.start()
+	await anim_player.animation_finished
+	is_damage = false
+
+
 func dash():
 	has_dashed = true
 	isdashing = true
@@ -147,3 +174,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 
 func _on_disable_attacking_area_timeout() -> void:
 	attack_area.monitoring = false
+	
+
+func _on_fall_damage_timer_timeout() -> void:
+	velocity.x = 0

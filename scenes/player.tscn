@@ -7,10 +7,17 @@
 [ext_resource type="Texture2D" uid="uid://dsnwm1k1jam0h" path="res://assets/player/fixed anims/attacking/6.png" id="7_bj30b"]
 [ext_resource type="Texture2D" uid="uid://cb6ycyho7s0bd" path="res://assets/player/fixed anims/attacking/7.png" id="8_jc3p3"]
 [ext_resource type="Texture2D" uid="uid://4tnhq35n5mhk" path="res://assets/player/fixed anims/attacking/8.png" id="9_hax0n"]
+[ext_resource type="Texture2D" uid="uid://cky61itk1da8n" path="res://assets/player/fixed anims/damage/2.png" id="10_j2b1d"]
 [ext_resource type="Texture2D" uid="uid://b5jd6f26fnwbe" path="res://assets/player/fixed anims/attacking/9.png" id="10_t4otl"]
+[ext_resource type="Texture2D" uid="uid://d4d6sepcju4w2" path="res://assets/player/fixed anims/damage/3.png" id="11_cs1tg"]
 [ext_resource type="Texture2D" uid="uid://c1muqwuh722px" path="res://assets/player/fixed anims/attacking/10.png" id="11_j2b1d"]
+[ext_resource type="Texture2D" uid="uid://d04imk3jjrkux" path="res://assets/player/fixed anims/damage/4.png" id="12_2dvfe"]
+[ext_resource type="Texture2D" uid="uid://c2sh0ijowndtw" path="res://assets/player/fixed anims/damage/5.png" id="13_giy8y"]
+[ext_resource type="Texture2D" uid="uid://bhl87aymiypql" path="res://assets/player/fixed anims/damage/6.png" id="14_fdfoy"]
 [ext_resource type="Texture2D" uid="uid://do5bp7o8coul1" path="res://assets/player/fixed anims/dash/2.png" id="14_giy8y"]
 [ext_resource type="Texture2D" uid="uid://chhgowcxcigfr" path="res://assets/player/fixed anims/dash/3.png" id="15_fdfoy"]
+[ext_resource type="Texture2D" uid="uid://du00n66dqccj2" path="res://assets/player/fixed anims/damage/7.png" id="15_hhpqf"]
+[ext_resource type="Texture2D" uid="uid://bxpha018fuff3" path="res://assets/player/fixed anims/damage/8.png" id="16_g5jhy"]
 [ext_resource type="Texture2D" uid="uid://qwa7w27lv5fv" path="res://assets/player/fixed anims/dash/4.png" id="16_hhpqf"]
 [ext_resource type="Texture2D" uid="uid://eeb1cmqgy0b3" path="res://assets/player/fixed anims/dash/5.png" id="17_g5jhy"]
 [ext_resource type="Texture2D" uid="uid://bv2fye0eay2hh" path="res://assets/player/fixed anims/dash/6.png" id="18_holxr"]
@@ -57,6 +64,32 @@ animations = [{
 "loop": 0,
 "name": &"attacking",
 "speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_j2b1d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_cs1tg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_2dvfe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_giy8y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_fdfoy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_hhpqf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_g5jhy")
+}],
+"loop": 0,
+"name": &"damage",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 0.1,
@@ -170,11 +203,11 @@ one_shot = true
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = SubResource("SpriteFrames_v15d6")
-animation = &"idle"
+animation = &"damage"
 centered = false
 offset = Vector2(-64, -64)
 metadata/_dot_aseprite_importer_player = NodePath("AnimationPlayer")
-metadata/_dot_aseprite_importer_sync_key = "afcb463a907ee86cf51c528e27d658c3"
+metadata/_dot_aseprite_importer_sync_key = "fa61f4213464d623ddb5e22cef6060d7"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="player_animated" unique_id=1953212157]
 root_node = NodePath("../..")
@@ -204,9 +237,15 @@ position = Vector2(1, -1)
 scale = Vector2(2.4041605, 1.1256182)
 polygon = PackedVector2Array(-9.150804, 6.218805, -8.7348585, 6.218805, -8.7348585, 5.3304043, -8.3189125, 5.3304043, -8.3189125, 4.4420037, -7.487021, 4.4420037, -7.487021, 3.553603, -6.2391844, 3.553603, -6.2391844, 2.6652021, -5.407293, 2.6652021, -5.407293, 1.7768015, -4.1594563, 1.7768015, -4.1594563, 0.88840073, -2.9116192, 0.88840073, -2.9116192, 0, -2.4956737, 0, -2.4956737, -0.88840073, -1.6637825, -0.88840073, -1.6637825, -2.6652021, -1.6637825, -7.107206, -2.9116192, -7.107206, -2.9116192, -7.995607, -2.0797281, -7.995607, -2.0797281, -8.884007, -0.83189124, -8.884007, -0.83189124, -9.772408, 0, -9.772408, 0, -10.660809, 0.8318912, -10.660809, 0.8318912, -9.772408, 1.6637825, -9.772408, 1.6637825, -8.884007, 2.9116194, -8.884007, 2.9116194, -7.995607, 4.1594563, -7.995607, 4.1594563, -7.107206, 2.9116194, -7.107206, 2.9116194, -1.7768013, 3.327565, -1.7768013, 3.327565, 0, 2.0797281, 0, 2.0797281, 0.88840073, 1.6637825, 0.88840073, 1.6637825, 7.107206, 1.2478368, 7.107206, 1.2478368, 7.9956064, 0.8318912, 7.9956064, 0.8318912, 9.7724085, 0.41594562, 9.7724085, 0.41594562, 7.9956064, 0, 7.9956064, 0, 9.7724085, -0.83189124, 9.7724085, -2.9116192, 9.7724085, -2.9116192, 8.884007, -3.327565, 8.884007, -3.327565, 7.9956064, -2.9116192, 7.9956064, -2.9116192, 7.107206, -4.575402, 7.107206, -4.575402, 7.9956064, -5.8232384, 7.9956064, -5.8232384, 8.884007, -6.2391844, 8.884007, -6.2391844, 9.7724085, -8.3189125, 9.7724085, -8.3189125, 8.884007, -9.150804, 8.884007)
 
+[node name="fall_damage_timer" type="Timer" parent="." unique_id=709373456]
+process_callback = 0
+wait_time = 0.67
+one_shot = true
+
 [connection signal="timeout" from="jump" to="." method="_on_jump_timeout"]
 [connection signal="body_entered" from="player_animated/Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="player_animated/Area2D" to="." method="_on_area_2d_body_exited"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="attack_start" to="." method="_on_attack_start_timeout"]
 [connection signal="timeout" from="disable_attacking_area" to="." method="_on_disable_attacking_area_timeout"]
+[connection signal="timeout" from="fall_damage_timer" to="." method="_on_fall_damage_timer_timeout"]
