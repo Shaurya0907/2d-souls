@@ -15,7 +15,7 @@ extends CharacterBody2D
 @onready var heavy_attack_length: Timer = $heavy_attack_length
 @onready var impact_timer: Timer = $impact_timer
 @onready var impact: AnimatedSprite2D = $impact
-
+@onready var camera: Camera2D = $"../Camera2D"
 
 
 var attacks_list = ["coolest_attack", "heavy_attack"]
@@ -179,6 +179,7 @@ func _on_heavy_attack_length_timeout() -> void:
 func _on_impact_timer_timeout() -> void:
 	impact.visible = true
 	anim_player.play("impact")
+	camera.camera_shake(10)
 	await anim_player.animation_finished
 	impact.visible = false
 	

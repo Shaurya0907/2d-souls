@@ -25,7 +25,7 @@ var isparry = false
 var has_dashed = false
 var is_damage = false
 const SPEED = 70
-
+	
 func _ready():
 	attack_area.monitoring = false
 	add_collision_exception_with(boss) #learnt a new function
